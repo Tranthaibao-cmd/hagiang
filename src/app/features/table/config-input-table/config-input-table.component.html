@@ -1,0 +1,87 @@
+
+<div class="control-section" *ngIf="RoleParams && UnitParams && GrdpParams" #backgroundgrid>
+  <h1 class="title-table">{{'Cấu hình các tham số đầu vào chỉ tiêu' | uppercase}}</h1>
+  <ejs-grid
+    #grid
+    [dataSource]="indiList"
+    [locale]="vi"
+    allowPaging="true"
+    [pageSettings]="pageSettings"
+    [editSettings]="editSettings"
+    [toolbar]="toolbar"
+    allowTextWrap="true"
+    [allowSorting]="true"
+    (actionBegin)="actionBegin($event)"
+    (dataBound)="dataBound($event)"
+    (load)="onLoad()"
+  >
+    <e-columns>
+      <e-column
+        field="ma_hien_thi"
+        headerText="Mã đầu vào cha"
+        width="50"
+        textAlign="Left"
+      ></e-column>
+      <e-column
+        field="ma_dau_vao"
+        headerText="Mã"
+        width="50"
+        textAlign="Left"
+        [isPrimaryKey]="true"
+        [validationRules]="{ required: [true, 'Mã là bắt buộc'] }"
+      ></e-column>
+      <e-column
+        field="ten_dau_vao"
+        headerText="Tên đầu vào chỉ tiêu"
+        width="150"
+        textAlign="Left"
+        [validationRules]="{
+          required: [true, 'Tên đầu vào chỉ tiêu là bắt buộc']
+        }"
+      ></e-column>
+      <e-column
+        field="ten_quyen_nguoi_dung"
+        headerText="Đơn vị nhập liệu"
+        width="80"
+        editType="dropdownedit"
+        [edit]="RoleParams"
+        textAlign="Left"
+        [validationRules]="{ required: [true, 'Đơn vị nhập liệu là bắt buộc'] }"
+      ></e-column>
+      <e-column
+        field="ten_cay_nhap_lieu"
+        headerText="Cây nhập liệu"
+        width="80"
+        editType="dropdownedit"
+        [edit]="GrdpParams"
+        textAlign="Left"
+      ></e-column>
+      <e-column
+        field="nhom_nganh"
+        headerText="Nhóm ngành"
+        width="80"
+        editType="dropdownedit"
+        [edit]="indiGroupParams"
+        textAlign="Left"
+      ></e-column>
+      <e-column
+        field="ky_nhap_lieu"
+        headerText="Định kỳ"
+        width="50"
+        editType="dropdownedit"
+        [edit]="PeriodParams"
+        textAlign="Left"
+        [validationRules]="{ required: [true, 'Định kỳ là bắt buộc'] }"
+      ></e-column>
+      <e-column
+        field="ten_don_vi_tinh"
+        headerText="Đơn vị"
+        width="80"
+        editType="dropdownedit"
+        [edit]="UnitParams"
+        textAlign="Left"
+        [validationRules]="{ required: [true, 'Đơn vị là bắt buộc'] }"
+      ></e-column>
+    </e-columns>
+  </ejs-grid>
+</div>

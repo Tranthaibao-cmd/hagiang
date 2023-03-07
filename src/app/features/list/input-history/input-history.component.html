@@ -1,0 +1,33 @@
+<div>
+  <div
+    style="
+      border-bottom: 1px solid #000;
+      font-size: 20px;
+      line-height: 48px;
+      height: 48px;
+      width: 100%;
+    "
+  >
+    Lịch sử nhập liệu
+  </div>
+  <div>
+    <ul *ngIf="historyList" class="mt-20">
+      <ejs-tooltip id="tooltip" *ngFor="let item of historyList">
+        <ng-template #content>
+          <h3>Thông tin nhập liệu</h3>
+          <ul>
+            <li>Mã đầu vào: {{ item.ma_dau_vao }}</li>
+            <li>Tên đầu vào: {{ item.ten_dau_vao }}</li>
+            <li>Kỳ nhập liệu: {{ item.ky_nhap_lieu }}</li>
+            <li>Người nhập: {{ item.ten_quyen_nguoi_dung }}</li>
+            <li>Giá trị: {{ item.gia_tri }}</li>
+            <li>Ngày nhập: {{ item.ngay_tao }}</li>
+          </ul>
+        </ng-template>
+        <li class="list">
+          {{ item.ten_dau_vao }}
+        </li>
+      </ejs-tooltip>
+    </ul>
+  </div>
+</div>

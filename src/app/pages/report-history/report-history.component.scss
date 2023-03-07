@@ -1,0 +1,33 @@
+// .e-popup.e-popup-open.e-dialog {
+//   width: 320px !important;
+// }
+::ng-deep .e-grid .e-toolbar .e-search-icon {
+  display: none !important;
+}
+
+.tab-button {
+  border: 0px;
+  background-color: transparent;
+  font-size: 15px;
+  padding: 5px 18px;
+  font-weight: 500;
+  border-radius: 10px;
+}
+.save-btn {
+  background: #008f5d;
+  color: #fff;
+}
+table {
+  width: 100%;
+  font-size: 14px;
+  & > tr > td {
+    padding: 5px 10px;
+    &:first-child {
+      font-weight: bold;
+      width: 30%;
+    }
+    &:last-child {
+      width: 70%;
+    }
+  }
+}

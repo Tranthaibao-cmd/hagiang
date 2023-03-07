@@ -1,0 +1,58 @@
+<div class="background-layout" #backgroundgrid>
+  <div class="control-section">
+    <ejs-grid
+      #grid
+      [dataSource]="historyList"
+      allowPaging="true"
+      [pageSettings]="pageSettings"
+      allowTextWrap="true"
+      [allowSorting]="true"
+      (dataBound)="dataBound($event)"
+    >
+      <e-columns>
+        <e-column
+          field="ten_chi_tieu"
+          headerText="Tên chỉ tiêu"
+          width="150"
+          textAlign="Left"
+        ></e-column>
+        <e-column
+          field="ky_nhap"
+          headerText="Kỳ nhập liệu"
+          width="100"
+          textAlign="Left"
+        ></e-column>
+        <e-column
+          field="nam_nhap"
+          headerText="Năm nhập liệu"
+          width="100"
+          textAlign="Left"
+        ></e-column>
+        <e-column
+          field="ten_nguoi_dung"
+          headerText="Người nhập"
+          width="100"
+          textAlign="Left"
+        ></e-column>
+        <e-column
+          field="gia_tri_cu"
+          headerText="Giá trị cũ"
+          width="80"
+          textAlign="Left"
+        ></e-column>
+        <e-column
+          field="gia_tri_moi"
+          headerText="Giá trị mới"
+          width="80"
+          textAlign="Left"
+        ></e-column>
+        <e-column
+          field="ngay_tao"
+          headerText="Ngày nhập"
+          width="100"
+          textAlign="Left"
+        ></e-column>
+      </e-columns>
+    </ejs-grid>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="login-bg">
+  <div class="login-form">
+    <div class="logo-area">
+      <img src="../../../../assets/logo/login-logo.png" height="150px" />
+    </div>
+    <p class="login-title">ĐĂNG NHẬP HỆ THỐNG</p>
+    <form [formGroup]="loginForm" (ngSubmit)="submit()">
+      <div class="form-group">
+        <div class="custom-input-group-first">
+          <div class="custom-input-prepend">
+            <i class="fas fa-user"></i>
+          </div>
+          <input
+            placeholder="Tài khoản"
+            type="text"
+            class="custom-form-control"
+            id="username"
+            floatLabelType="Always"
+            formControlName="username"
+          />
+        </div>
+        <div
+          *ngIf="
+            loginUsernameCtrl.invalid &&
+            (loginUsernameCtrl.dirty || loginUsernameCtrl.touched)
+          "
+          class="e-error"
+        >
+          <div *ngIf="loginUsernameCtrl.errors.required" class="error-text">
+            Tài khoản là bắt buộc.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="custom-input-group-second">
+          <div class="custom-input-prepend">
+            <i class="fas fa-lock-alt"></i>
+          </div>
+          <input
+            placeholder="Mật khẩu"
+            [type]="typePass ? 'password' : 'text'"
+            class="custom-form-control"
+            id="password"
+            floatLabelType="Always"
+            formControlName="password"
+          />
+          <div class="custom-input-append">
+            <i
+              [class]="typePass ? showIcon : hideIcon"
+              (click)="typePass = !typePass"
+            ></i>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            loginPasswordCtrl.invalid &&
+            (loginPasswordCtrl.dirty || loginPasswordCtrl.touched)
+          "
+          class="e-error"
+        >
+          <div *ngIf="loginPasswordCtrl.errors.required" class="error-text">
+            Mật khẩu là bắt buộc.
+          </div>
+        </div>
+      </div>
+      <div *ngIf="mess" class="error-text">{{ mess }}</div>
+      <div *ngIf="loginStatus != ''" style="font-size: 12px; color: red">
+        {{ loginStatus }}
+      </div>
+      <div style="text-align: center">
+        <button
+          type="submit"
+          class="custom-btn"
+        >
+          Đăng nhập
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

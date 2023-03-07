@@ -1,0 +1,76 @@
+input[type="file"] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.color-input{
+  color: red;
+}
+.value-number {
+  min-height: 32px;
+  line-height: 1.4;
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  background-color: transparent;
+  margin-bottom: 3px;
+}
+.value-number::-webkit-outer-spin-button,
+.value-number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.input-file-label {
+  margin: 0;
+}
+.e-dialog .e-dlg-content {
+  font-size: 15px;
+  font-weight: normal;
+}
+.e-expand:before {
+  content: "\e308";
+}
+.e-row-role {
+  background-color: #aaaaaa !important;
+}
+.cus-input {
+  min-height: 32px;
+  line-height: 1.4;
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  background-color: transparent;
+  margin-bottom: 3px;
+}
+::ng-deep.e-save_2:before {
+  content: "\e735";
+  color: #fff !important;
+}
+
+::ng-deep {
+  .add-toolbar-btn {
+    background-color: #368fe7 !important;
+  }
+  .edit-toolbar-btn {
+    background-color: #ffaf00 !important;
+  }
+  .delete-toolbar-btn {
+    background-color: #fd3f42 !important;
+  }
+  .save-toolbar-btn {
+    background-color: #39b894 !important;
+  }
+  .cancel-toolbar-btn {
+    background-color: #a6a6a6 !important;
+  }
+}
+.pre-custom {
+  white-space: break-spaces;
+  font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif",
+    "-apple-system", "BlinkMacSystemFont";
+  font-size: 13px;
+  margin: 0;
+}

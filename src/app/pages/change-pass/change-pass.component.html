@@ -1,0 +1,86 @@
+<head>
+  <link
+    rel="stylesheet"
+    href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+    crossorigin="anonymous"
+  />
+</head>
+<div class="background-layout">
+  <h1 class="title">Đổi mật khẩu</h1>
+  <form [formGroup]="passForm" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label for="mat_khau_cu" class="label"
+        >Mật khẩu cũ<span style="color: red">*</span></label
+      >
+      <div class="pass-group">
+        <input
+          #old_pass
+          placeholder="Mật khẩu cũ"
+          [type]="'password'"
+          class="pass-input"
+          id="mat_khau_cu"
+          floatLabelType="Always"
+          formControlName="mat_khau_cu"
+        />
+        <div class="pass-icon">
+          <i
+            [class]="old_pass_icon"
+            style="line-height: 30px; font-size: 16px"
+            (click)="showPass(old_pass)"
+          ></i>
+        </div>
+      </div>
+      <div
+        *ngIf="
+          formOldPassCtrl.invalid &&
+          (formOldPassCtrl.dirty || formOldPassCtrl.touched)
+        "
+        class="e-error"
+      >
+        <div *ngIf="formOldPassCtrl.errors.required" class="error-text">
+          Mật khẩu cũ là bắt buộc.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="mat_khau_moi" class="label">Mật khẩu mới<span style="color: red">*</span></label>
+      <div class="pass-group">
+        <input
+          #new_pass
+          placeholder="Mật khẩu mới"
+          type="password"
+          class="pass-input"
+          id="mat_khau_moi"
+          floatLabelType="Always"
+          formControlName="mat_khau_moi"
+        />
+        <div class="pass-icon">
+          <i
+            [class]="new_pass_icon"
+            style="line-height: 30px; font-size: 16px"
+            (click)="showPass(new_pass)"
+          ></i>
+        </div>
+      </div>
+      <div
+        *ngIf="
+          formNewPassCtrl.invalid &&
+          (formNewPassCtrl.dirty || formNewPassCtrl.touched)
+        "
+        class="e-error"
+      >
+        <div *ngIf="formNewPassCtrl.errors?.isError" class="error-text">
+          *Mật khẩu yêu cầu tối thiểu 8 ký tự, chứa tối thiểu 1 chữ thường, 1 chữ
+          hoa, 1 số và 1 ký tự đặc biệt
+        </div>
+      </div>
+      <div *ngIf="error" class="error-text">
+        {{ error }}
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary custom-btn" [disabled]="passForm.invalid">
+      Đổi mật khẩu
+    </button>
+  </form>
+</div>

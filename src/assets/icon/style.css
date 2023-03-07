@@ -1,0 +1,113 @@
+@font-face {
+  font-family: 'hagiang-icon';
+  src:  url('fonts/hagiang-icon.eot?otd5zi');
+  src:  url('fonts/hagiang-icon.eot?otd5zi#iefix') format('embedded-opentype'),
+    url('fonts/hagiang-icon.ttf?otd5zi') format('truetype'),
+    url('fonts/hagiang-icon.woff?otd5zi') format('woff'),
+    url('fonts/hagiang-icon.svg?otd5zi#hagiang-icon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'hagiang-icon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-add:before {
+  content: "\e900";
+}
+.icon-add_1:before {
+  content: "\e901";
+  color: #2485e5;
+}
+.icon-Artboard-28:before {
+  content: "\e902";
+}
+.icon-canhbao:before {
+  content: "\e903";
+}
+.icon-canhbao-set:before {
+  content: "\e904";
+}
+.icon-cauhinh:before {
+  content: "\e905";
+}
+.icon-close:before {
+  content: "\e906";
+}
+.icon-chart:before {
+  content: "\e907";
+}
+.icon-delete:before {
+  content: "\e908";
+  color: #f00;
+}
+.icon-dropdown:before {
+  content: "\e909";
+}
+.icon-dubao:before {
+  content: "\e90a";
+}
+.icon-dubao-set:before {
+  content: "\e90b";
+}
+.icon-huy:before {
+  content: "\e90c";
+}
+.icon-lock:before {
+  content: "\e90d";
+}
+.icon-nam:before {
+  content: "\e90e";
+}
+.icon-nhaplieu:before {
+  content: "\e90f";
+}
+.icon-nhaplieu-set:before {
+  content: "\e910";
+}
+.icon-quy:before {
+  content: "\e911";
+}
+.icon-reload:before {
+  content: "\e912";
+  color: #fbb03b;
+}
+.icon-save:before {
+  content: "\e913";
+}
+.icon-save_1:before {
+  content: "\e914";
+  color: #2485e5;
+}
+.icon-search:before {
+  content: "\e915";
+}
+.icon-sua:before {
+  content: "\e916";
+  color: #39b54a;
+}
+.icon-thongke:before {
+  content: "\e917";
+}
+.icon-user:before {
+  content: "\e918";
+}
+.icon-user-gr:before {
+  content: "\e919";
+}
+.icon-user-set:before {
+  content: "\e91a";
+}

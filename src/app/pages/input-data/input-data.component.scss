@@ -1,0 +1,89 @@
+.filter-order {
+  display: flex;
+  justify-content: space-between;
+  .filter-area {
+    flex-basis: 60%;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    .selection-container {
+      flex-basis: 20%;
+      margin-right: 10px;
+    }
+    .selection-container:last-child {
+      margin-right: 0;
+    }
+  }
+  .download-file {
+    flex-basis: content;
+    .download-button {
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      margin-right: 10px;
+      .file-excel {
+        cursor: pointer;
+        text-decoration: none;
+        color: #000;
+        .excel-icon {
+          cursor: pointer;
+          display: inline-block;
+          height: 17px;
+          width: auto;
+        }
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+select {
+  height: calc(1.5em + 0.75rem + 2px);
+  color: #67757c;
+  border-color: #e5e5e5;
+  border-radius: 5px;
+  width: 100%;
+}
+option {
+  color: #67757c;
+  border-color: #e5e5e5;
+}
+select:focus {
+  outline: none;
+  box-shadow: 0px 0px 0px 4px #52a5f881;
+}
+label {
+  margin-bottom: 2px;
+  color: #67757c;
+}
+input[type="file"] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.title-table {
+  font-size: 18px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+::ng-deep{
+  @media screen and (max-width: 600px) {
+    .selection-container{
+      flex-basis: 100%;
+      width: 100%;
+    }
+    .download-file{
+      text-align: right !important;
+    }
+    .download-button{
+      margin-right: 0 !important;
+    }
+  }
+}

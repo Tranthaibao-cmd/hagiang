@@ -1,0 +1,54 @@
+.option-container {
+    display: flex;
+    justify-content: space-between;
+    .selection-container {
+      display: flex;
+      justify-content: flex-start;
+      .selection-item {
+        margin-right: 20px;
+      }
+    }
+  }
+  .download-button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    margin-right: 10px;
+    .file-excel {
+      cursor: pointer;
+      text-decoration: none;
+      color: #000;
+      .excel-icon {
+        cursor: pointer;
+        display: inline-block;
+        height: 17px;
+        width: auto;
+      }
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  .title-table {
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  @media screen and (max-width: 600px) {
+    .selection-container {
+      flex-wrap: wrap !important;
+      .selection-item {
+        width: 100%;
+        margin-right: 0 !important;
+      }
+    }
+  }
+  ::ng-deep {
+    @media screen and (max-width: 600px) {
+      .e-dropdownlist > .e-input-group {
+        width: 100% !important;
+      }
+    }
+  }
+  

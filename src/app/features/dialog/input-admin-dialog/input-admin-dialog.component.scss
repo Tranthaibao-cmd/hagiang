@@ -1,0 +1,30 @@
+.tab-button {
+  border: 0px;
+  background-color: transparent;
+  font-size: 15px;
+  padding: 0 18px;
+  font-weight: 500;
+  height: 36px;
+  line-height: 36px;
+  border-radius: 10px;
+}
+.selected-tab {
+  color: #e3165b;
+  border-bottom: 2px solid #e3165b;
+}
+.e-popup.e-popup-open.e-dialog {
+  max-height: 90vh !important;
+}
+.save-btn {
+  background: #008f5d;
+  color: #fff;
+}
+.cancel-btn {
+  margin-left: 10px;
+  background: #a9a9a9;
+  color: #fff;
+}
+input[type=checkbox]{
+  width: auto;
+  margin-right: 5px;
+}

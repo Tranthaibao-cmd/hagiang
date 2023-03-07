@@ -1,0 +1,54 @@
+.sidebar-section {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  // box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+}
+.title-sidebar {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  text-align: center;
+}
+::ng-deep.e-rowcell {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+::ng-deep.e-rowcell,
+.e-unboundcell {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+li {
+  list-style: none;
+}
+@media only screen and (min-width: 1367px) {
+  .form-control {
+    font-size: 16px;
+  }
+  .header-text {
+    font-size: 18px;
+  }
+}
+@media only screen and (max-width: 1366px) {
+  .form-control {
+    font-size: 14px;
+  }
+  .header-text {
+    font-size: 16px;
+  }
+}
+// ::ng-deep.e-grid .e-toolbar-items .e-toolbar-item.e-search-wrapper .e-search{
+//   width: 100% !important;
+// }
+.sidebar-section > ::ng-deep.e-grid {
+  .e-toolbar-right {
+    width: 100% !important;
+    .e-search-wrapper {
+      width: 100% !important;
+      .e-search {
+        width: 100% !important;
+      }
+    }
+  }
+}

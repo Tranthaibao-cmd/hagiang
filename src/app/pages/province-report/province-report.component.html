@@ -1,0 +1,99 @@
+
+<div class="background-container">
+  <div class="content-container" id="container">
+    <h1 class="title-table">{{ 'Báo cáo tỉnh' | uppercase }}</h1>
+    <div class="tab-container">
+      <div class="tab-menu">
+        <span *ngFor="let item of tabList" class="tab" [class]="item.value == selectedTab ? 'selected-tab' : ''"
+          (click)="onClick(item.value)">
+          {{ item.name }}
+        </span>
+      </div>
+    </div>
+    <!-- <div *ngIf="user.cap >= 4" class="date-selection-container">
+      <div class="date-item date-title">Chọn ngày báo cáo:</div>
+      <ejs-dropdownlist #start class="mr-20" [dataSource]="startList" placeholder="Ngày bắt đầu" [width]="100"
+        (change)="changeStart($event)" floatLabelType="Always" class="date-item"></ejs-dropdownlist>
+      <ejs-dropdownlist #end class="mr-20" [dataSource]="endList" placeholder="Ngày kết thúc" [width]="100"
+        (change)="changeEnd($event)" floatLabelType="Always" [enabled]="false" class="date-item">
+      </ejs-dropdownlist>
+    </div> -->
+    <!-- <div [style.opacity]="checkDate ? 0.5 : 1"> -->
+    <div class="selection-container">
+      <ejs-dropdownlist *ngIf="periodList" class="mr-20" [dataSource]="periodList" [fields]="fields"
+        placeholder="Kỳ báo cáo" (change)="change($event, 'ky')" [(value)]="selectedPeriod" floatLabelType="Always">
+      </ejs-dropdownlist>
+      <ejs-dropdownlist *ngIf="yearList" class="mr-20" [dataSource]="yearList" [fields]="fields" placeholder="Năm"
+        (change)="change($event, 'nam')" [(value)]="selectedYear" floatLabelType="Always">
+      </ejs-dropdownlist>
+      <ejs-dropdownlist *ngIf="baseList" class="mr-20" [dataSource]="baseList" [fields]="fields" placeholder="Sở"
+        (change)="change($event, 'ma_cap_so')" [value]="selectedBase" floatLabelType="Always">
+      </ejs-dropdownlist>
+    </div>
+    <ejs-treegrid *ngIf="reportTableList" #treegrid class="custom-border" allowTextWrap="true"
+      [dataSource]="reportTableList.data" childMapping="children" [treeColumnIndex]="0" allowPaging="true"
+      [pageSettings]="pageSettings" [allowSorting]="true" (created)="created($event)" (load)="onLoad()"
+     >
+      <e-columns>
+        <e-column field="ten_chi_tieu" headerText="Chỉ tiêu" width="140" isPrimaryKey="true" textAlign="Left">
+        </e-column>
+        <e-column *ngIf="reportTableList.data[0]?.don_vi_tinh != undefined" field="don_vi_tinh" headerText="Đơn vị"
+          width="140" textAlign="Left"></e-column>
+        <e-column *ngIf="reportTableList.data[0]?.ten_don_vi != undefined" field="ten_don_vi" headerText="Đơn vị"
+          width="140" textAlign="Left"></e-column>
+        <e-column *ngFor="let item of reportTableList.label" [field]="format_label(item)" [headerText]="format_label(item)" width="140"
+          textAlign="Left">
+          <ng-template #template let-data>
+            <ejs-numerictextbox class="custom-enumeric" format="n0" min="0" placeholder="Nhập kế hoạch"
+              (change)="changeReport($event, data, item)" [value]="data[item]">
+            </ejs-numerictextbox>
+          </ng-template>
+        </e-column>
+        <!-- <e-colum  n field="ghi_chu" headerText="Ghi chú" width="140" textAlign="Left">
+                    <ng-template #template let-data>
+                        <div class="e-input-group">
+                            <input class="e-input" type="text" placeholder="Nhập mô tả" (focus)="focusIn($event.target)"
+                                (blur)="focusOut($event.target)" (change)="changeReport($event, data, 'ghi_chu')"
+                                [value]="data['ghi_chu']" />
+                        </div>
+                    </ng-template>
+                </e-column> -->
+      </e-columns>
+    </ejs-treegrid>
+    <div *ngIf="message" style="padding: 10px 0">{{message}}</div>
+    <div class="report-function">
+      <div class="report-message">
+        <div *ngIf="reportTableList" style="margin-top: 10x" style="padding: 10px 0">
+          Phản hồi: {{ reportTableList.phan_hoi }}
+        </div>
+        <div *ngIf="reportTableList" class="form-floating">
+          <textarea class="form-control" id="floatingTextarea" [(ngModel)]="reportTableList.mo_ta"
+            placeholder="name@example.com" [disabled]="check"></textarea>
+          <label for="floatingTextarea">Mô tả</label>
+        </div>
+        <div></div>
+      </div>
+      <div class="report-button">
+        <button *ngIf="reportTableList" [disabled]="check" class="btn-save-table" (click)="save()">
+          {{
+          getTitle(reportTableList)
+          }}</button><button *ngIf="reportTableList" [disabled]="check" class="btn-save-table"
+          (click)="downloadFile(reportTableList)" style="margin-right: 10px">
+          Xuất Excel
+        </button>
+        <button *ngIf="reportTableList || message" class="btn-save-table" (click)="dialogOpen()"
+          style="margin-right: 10px">
+          Phản hồi
+        </button>
+      </div>
+    </div>
+    <!-- </div> -->
+  </div>
+</div>
+<ejs-dialog #Dialog [buttons]="dlgButtons" [header]="'Nội dung phản hồi'" [showCloseIcon]="true"
+  (overlayClick)="dialogClose()" isModal="true" [visible]="false" (close)="dialogClose()">
+  <ng-template #content>
+    <textarea rows="4" [(ngModel)]="feedbackContent"
+      style="width: 100%; border: 1px solid gray; border-radius: 5px"></textarea>
+  </ng-template>
+</ejs-dialog>

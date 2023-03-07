@@ -1,0 +1,43 @@
+<div class="background-layout">
+  <h1 class="title-table">{{ 'Nhập giá trị chỉ tiêu' | uppercase}}</h1>
+  <div>
+    <div class="filter-order mb-20">
+      <div class="filter-area">
+        <div class="selection-container">
+          <ejs-dropdownlist #typeDrop id="type" [dataSource]="typeData" [fields]="fields" [popupHeight]="height"
+            placeholder="Loại kỳ" [value]="currentType" (change)="change($event, 'type')" floatLabelType="Always">
+          </ejs-dropdownlist>
+        </div>
+        <div class="selection-container">
+          <ejs-dropdownlist #periodDrop id="period" [dataSource]="periodData" [fields]="fields" [popupHeight]="height"
+            placeholder="Kỳ nhập liệu" [value]="currentPeriod" (change)="change($event, 'period')"
+            floatLabelType="Always"></ejs-dropdownlist>
+        </div>
+        <div class="selection-container">
+          <ejs-dropdownlist id="year" [dataSource]="yearData" [fields]="fields" [popupHeight]="height" placeholder="Năm"
+            [value]="currentYear" (change)="change($event, 'year')" floatLabelType="Always">
+          </ejs-dropdownlist>
+        </div>
+        <div class="selection-container">
+          <ejs-dropdownlist *ngIf="user.cap != 2 && user.cap != 6" id="branch" [dataSource]="branchData" [fields]="fields" [popupHeight]="height" placeholder="Ngành"
+            [value]="currentBranch" (change)="change($event, 'branch')" floatLabelType="Always">
+          </ejs-dropdownlist>
+        </div>
+      </div>
+      <div class="download-file">
+        <button class="download-button">
+          <input type="file" id="uploadFile" (change)="onUploadedFile($event)"
+            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+          <label class="file-excel" for="uploadFile"><img src="../../../assets/img/excel-up.png"
+              class="excel-icon" />Tải file lên</label>
+        </button>
+        <button class="download-button">
+          <a (click)="getDownloadURL()" class="file-excel"><img src="../../../assets/img/excel-down.png"
+              class="excel-icon" />Tải file xuống</a>
+        </button>
+      </div>
+    </div>
+    <app-input-data-table [currentPeriod]="currentPeriod" [currentYear]="currentYear" [currentBranch]="currentBranch">
+    </app-input-data-table>
+  </div>
+</div>

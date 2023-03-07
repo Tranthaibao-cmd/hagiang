@@ -1,0 +1,22 @@
+.error-text{
+    color: red;
+    font-style: italic;
+    font-size: 13px;
+}
+label{
+    color: #67757C;
+    margin-bottom: .1rem;
+}
+.role{
+    color: red;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+select{
+    height: calc(1.5em + 0.75rem + 2px);
+    color: #67757c;
+    border-color: #e5e5e5;
+    border-radius: 5px;
+    width: 100%;
+}

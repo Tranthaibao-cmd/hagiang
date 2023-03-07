@@ -1,0 +1,37 @@
+.title-table {
+  font-size: 18px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+::ng-deep {
+  .e-save_3:before {
+    content: "\e735";
+    color: #fff !important;
+  }
+  .e-multi-select-wrapper .e-delim-values {
+    font-size: 13px !important;
+    color: red !important;
+  }
+  .e-multiselect.e-input-group,
+  .e-multiselect.e-float-input {
+    word-wrap: break-word !important;
+  }
+  .add-toolbar-btn {
+    background-color: #368fe7 !important;
+  }
+  .edit-toolbar-btn {
+    background-color: #ffaf00 !important;
+  }
+  .delete-toolbar-btn {
+    background-color: #fd3f42 !important;
+  }
+  .save-toolbar-btn {
+    background-color: #39b894 !important;
+  }
+  .cancel-toolbar-btn {
+    background-color: #a6a6a6 !important;
+  }
+
+
+}

@@ -1,0 +1,31 @@
+::ng-deep.e-grid .e-rowcell {
+  padding: 8px 5px !important;
+}
+::ng-deep.e-grid .e-headercell,
+.e-grid .e-detailheadercell {
+  padding: 0 5px !important;
+}
+::ng-deep .e-grid .e-gridheader .e-sortfilter .e-headercelldiv,
+.e-grid .e-gridheader .e-stackedheadercelldiv,
+.e-grid .e-gridheader .e-headercell .e-headercelldiv.e-headerchkcelldiv {
+  padding: 0 0.6em !important;
+}
+
+
+::ng-deep {
+  .add-toolbar-btn {  
+    background-color: #368fe7 !important;
+  }
+  .edit-toolbar-btn {
+    background-color: #FFAF00 !important;
+  }
+  .delete-toolbar-btn {
+    background-color: #FD3F42 !important;
+  }
+  .save-toolbar-btn {
+    background-color: #39B894 !important;
+  }
+  .cancel-toolbar-btn {
+    background-color: #A6A6A6 !important;
+  }
+}

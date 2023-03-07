@@ -1,0 +1,57 @@
+.control-fluid {
+  padding: 0px !important;
+}
+.dashed-chartcontainer-custom {
+  stroke-dasharray: 10px 10px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  -webkit-animation: dash 1s linear infinite;
+  animation: dash 1s linear infinite;
+}
+$i: 1;
+@while $i < 12 {
+  #dashed-chartcontainer_Series_#{$i} {
+    stroke-dasharray: 10px 10px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    -webkit-animation: dash 1s linear infinite;
+    animation: dash 1s linear infinite;
+  }
+  $i: $i + 2;
+}
+// #dashed-chartcontainer_Series_1,
+// #dashed-chartcontainer_Series_3
+// // #dashed-chartcontainer_Series_0
+// {
+//   stroke-dasharray: 10px 10px;
+//   stroke-linejoin: round;
+//   stroke-linecap: round;
+//   -webkit-animation: dash 1s linear infinite;
+//   animation: dash 1s linear infinite;
+// }
+#dashed-chartcontainer_Series_1_Point_0_Symbol {
+  -webkit-animation: opac 1s ease-out infinite;
+  animation: opac 1s ease-out infinite;
+}
+@-webkit-keyframes dash {
+  100% {
+    stroke-dashoffset: -20px;
+  }
+}
+
+@keyframes dash {
+  100% {
+    stroke-dashoffset: -20px;
+  }
+}
+
+@keyframes opac {
+  0% {
+    stroke-opacity: 1;
+    stroke-width: 0px;
+  }
+  100% {
+    stroke-opacity: 0;
+    stroke-width: 10px;
+  }
+}

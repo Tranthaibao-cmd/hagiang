@@ -1,0 +1,47 @@
+<div class="background-layout" #backgroundgrid>
+  <h1 class="title-table">{{ 'Nhập giá trị GRDP' | uppercase}}</h1>
+  <div class="filter-order mb-20">
+    <div class="filter-area">
+      <div class="selection-container">
+        <label for="period">Kỳ nhập liệu</label>
+        <ejs-dropdownlist id="period" [dataSource]="periodData" [fields]="{ text: 'name', value: 'value' }"
+          [popupHeight]="height" width="150px" placeholder="Chọn kỳ" [value]="currentPeriod"
+          (change)="change($event, 'period')"></ejs-dropdownlist>
+      </div>
+      <div class="selection-container">
+        <label for="year">Năm</label>
+        <ejs-dropdownlist id="year" [dataSource]="yearData" [fields]="{ text: 'name', value: 'value' }"
+          [popupHeight]="height" width="120px" placeholder="Chọn năm" [value]="currentYear"
+          (change)="change($event, 'year')"></ejs-dropdownlist>
+      </div>
+      <div class="selection-container" style="flex-basis: 60%">
+        <label for="type">Ngành</label>
+        <ejs-dropdownlist id="type" [dataSource]="typeData" [fields]="{ text: 'name', value: 'value' }"
+          (filtering)="onFiltering($event)" filterBarPlaceholder="Tìm kiếm" [allowFiltering]="true"
+          [ignoreAccent]='true' [popupHeight]="height" width="300px" placeholder="Chọn ngành" [value]="currentType"
+          popupWidth="500px" (change)="change($event, 'type')" (close)="onClose($event)">
+          <ng-template #itemTemplate let-data>
+            <div>
+              <ejs-tooltip #tooltip [content]="data.name" position="TopLeft"
+                (beforeOpen)="onBeforeOpen($event, tooltip)"><span>{{ data.name }}</span></ejs-tooltip>
+            </div>
+          </ng-template>
+        </ejs-dropdownlist>
+      </div>
+    </div>
+    <div class="download-file">
+      <button class="download-button">
+        <input type="file" id="uploadFile" (change)="onUploadedFile($event)"
+          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+        <label class="file-excel" for="uploadFile"><img src="../../../assets/img/excel-up.png" class="excel-icon" />Tải
+          file lên</label>
+      </button>
+      <button class="download-button">
+        <a (click)="getDownloadURL()" class="file-excel"><img src="../../../assets/img/excel-down.png"
+            class="excel-icon" />Tải file xuống</a>
+      </button>
+    </div>
+  </div>
+  <app-input-grdp-table [currentPeriod]="currentPeriod" [currentYear]="currentYear" [currentType]="currentType"
+    *ngIf="currentType && currentYear && currentPeriod"></app-input-grdp-table>
+</div>

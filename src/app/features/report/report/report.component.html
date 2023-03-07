@@ -1,0 +1,137 @@
+<div class="background-container" #backgroundgrid>
+  <div class="content-container" id="container">
+    <h1 class="title-table">{{getTabName() | uppercase}}</h1>
+    <div class="tab-container">
+      <div class="tab-menu">
+        <span *ngFor="let item of tabList" class="tab" [class]="item.value == selectedTab ? 'selected-tab' : ''"
+          (click)="onClick(item.value)">
+          {{ item.name }}
+        </span>
+      </div>
+    </div>
+    <!-- <div *ngIf="user.cap >= 4" class="date-selection-container">
+      <div class="date-item date-title">Chọn ngày báo cáo:</div>
+      <ejs-dropdownlist #start class="mr-20" [dataSource]="startList" placeholder="Ngày bắt đầu" [width]="100"
+        (change)="changeStart($event)" floatLabelType="Always" class="date-item"></ejs-dropdownlist>
+      <ejs-dropdownlist #end class="mr-20" [dataSource]="endList" placeholder="Ngày kết thúc" [width]="100"
+        (change)="changeEnd($event)" floatLabelType="Always" [enabled]="false" class="date-item">
+      </ejs-dropdownlist>
+    </div> -->
+    <!-- <button (click)="showlog()">Log</button> -->
+    <div [style.opacity]="checkDate ? 0.5 : 1">
+      <div class="selection-container">
+        <ejs-dropdownlist *ngIf="periodList" class="mr-20" [dataSource]="periodList" [fields]="fields"
+          placeholder="Kỳ báo cáo" (change)="change($event, 'ky')" [(value)]="selectedPeriod" floatLabelType="Always">
+        </ejs-dropdownlist>
+        <ejs-dropdownlist *ngIf="yearList" class="mr-20" [dataSource]="yearList" [fields]="fields" placeholder="Năm"
+          (change)="change($event, 'nam')" [(value)]="selectedYear" floatLabelType="Always">
+        </ejs-dropdownlist>
+        <ejs-dropdownlist *ngIf="dropdownList!= undefined && selectedTemplateReport" class="mr-20"
+          [dataSource]="dropdownList" [fields]="fields" [allowFiltering]='true' [ignoreAccent]='true'
+          [placeholder]="dropdownTitle" (change)="change($event, 'mau_bao_cao')" [value]="selectedTemplateReport"
+          floatLabelType="Always">
+          <ng-template #itemTemplate let-data>
+            <div [style.color]="data.status == 0 ? 'red': ''">{{data.name}}</div>
+          </ng-template>
+        </ejs-dropdownlist>
+        <ejs-dropdownlist *ngIf="branchList!=undefined && selectedBranch != undefined" class="mr-20"
+          [dataSource]="branchList" [fields]="fields" [allowFiltering]='true' [ignoreAccent]='true' placeholder="Ngành"
+          (change)="change($event, 'nganh')" [value]="selectedBranch" floatLabelType="Always">
+          <!-- <ng-template #itemTemplate let-data>
+            <div>{{data.name}}</div>
+          </ng-template> -->
+        </ejs-dropdownlist>
+        <ejs-dropdownlist #officeDropdown *ngIf="officeList!=undefined && selectedTab == 'Phong thuoc huyen tong hop'"
+          class="mr-20" [dataSource]="officeList" [fields]="fields" [allowFiltering]='true' [ignoreAccent]='true'
+          placeholder="Cơ quan nhận" (change)="change($event, 'co_so_nhan')" [value]="selectedOffice"
+          floatLabelType="Always"></ejs-dropdownlist>
+      </div>
+      <ejs-treegrid *ngIf="reportTableList" #treegrid class="custom-border" allowTextWrap="true"
+        [dataSource]="reportTableList.data" childMapping="children" [treeColumnIndex]="0" allowPaging="true"
+        [pageSettings]="pageSettings" [allowSorting]="true" (created)="created($event)" (load)="onLoad()">
+        <e-columns>
+          <e-column field="ten_chi_tieu" headerText="Chỉ tiêu" width="140" isPrimaryKey="true" textAlign="Left">
+          </e-column>
+          <e-column field="ten_don_vi" headerText="Đơn vị" width="140" textAlign="Left"></e-column>
+          <e-column *ngFor="let item of reportTableList.label" [field]="format_label(item)" [headerText]="format_label(item)" width="140"
+            textAlign="Left">
+            <ng-template #template let-data>
+              <input *ngIf="submitTitle == 'Trình cấp trên' && item.includes('so với'); else onlyRead" type="text"
+                [ngModel]="convertData(data[item])" class="input-number" (change)="changeReport($event, data, item)"
+                mask="separator" thousandSeparator=".">
+              <ng-template #onlyRead>
+                <span>{{data[item] | number: '1.0-3' : 'vi'}}</span>
+              </ng-template>
+            </ng-template>
+          </e-column>
+          <e-column field="ghi_chu" headerText="Ghi chú" width="140" textAlign="Left">
+            <ng-template #template let-data>
+              <div class="e-input-group" *ngIf="submitTitle == 'Trình cấp trên'; else temp">
+                <input class="e-input" type="text" placeholder="Nhập mô tả" (focus)="focusIn($event.target)"
+                  (blur)="focusOut($event.target)" (change)="changeReport($event, data, 'ghi_chu')"
+                  [value]="data['ghi_chu']" />
+              </div>
+              <ng-template #temp>
+                <span>{{data.ghi_chu}}</span>
+              </ng-template>
+            </ng-template>
+          </e-column>
+        </e-columns>
+      </ejs-treegrid>
+      <div *ngIf="message" style="padding: 10px 0">{{message}}</div>
+      <div class="report-function">
+        <div class="report-message">
+          <div *ngIf="reportTableList" style="margin-top: 10x" style="padding: 10px 0">
+            Phản hồi: {{ reportTableList.phan_hoi }}
+          </div>
+          <div *ngIf="reportTableList" class="form-floating">
+            <textarea class="form-control" id="floatingTextarea" [(ngModel)]="reportTableList.mo_ta"
+              placeholder="name@example.com" [disabled]="check || (user.cap > selectedLevel)"></textarea>
+            <label for="floatingTextarea">Mô tả</label>
+          </div>
+          <div></div>
+        </div>
+        <!-- <button type="button" (click)="checktest()">test</button> -->
+        <div class="report-button" *ngIf="(user.cap !=3) || (selectedBranch == user.ma_phong)">
+          <button *ngIf="reportTableList && cancelTitle" class="btn-cancel-table" (click)="cancel()">
+            {{cancelTitle}}</button>
+          <button *ngIf="reportTableList && submitTitle" class="btn-save-table"
+            [disabled]="check || ['Đã duyệt','Đã chấp thuận'].includes(submitTitle)"
+            (click)="save()">{{submitTitle}}</button>
+          <button *ngIf="reportTableList" [disabled]="check" class="btn-excel-table"
+            (click)="downloadFile(reportTableList)" style="margin-right: 10px">
+            Xuất Excel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ejs-dialog #chooseLeader header="Trình báo cáo" [showCloseIcon]="true" (overlayClick)="chooseLeaderClose()"
+  isModal="true" [visible]="false" (close)="chooseLeaderClose()">
+  <ng-template #content>
+    <ejs-dropdownlist #chooseLeaderDrop [dataSource]="leaderList" placeholder="Chọn lãnh đạo nộp"
+      (change)="changeLeader($event)" floatLabelType="Always" [fields]="{text: 'ten_day_du', value: 'ten_nguoi_dung'}">
+    </ejs-dropdownlist>
+  </ng-template>
+  <ng-template #footerTemplate>
+    <div style="display: flex; justify-content: right;">
+      <button class="tab-button save-btn" (click)="chooseLeaderSave()"
+        [disabled]="selectedLeader==undefined">Gửi</button>
+      <button class="tab-button cancel-btn" (click)="chooseLeaderClose()">Hủy</button>
+    </div>
+  </ng-template>
+</ejs-dialog>
+<ejs-dialog #Dialog [header]="'Nội dung phản hồi'" [showCloseIcon]="true" (overlayClick)="dialogClose()" isModal="true"
+  [visible]="false" (close)="dialogClose()">
+  <ng-template #content>
+    <textarea rows="4" [(ngModel)]="feedbackContent"
+      style="width: 100%; border: 1px solid gray; border-radius: 5px"></textarea>
+  </ng-template>
+  <ng-template #footerTemplate>
+    <div style="display: flex; justify-content: right;">
+      <button class="tab-button save-btn" (click)="feedbackSave()" [disabled]="!feedbackContent">Gửi</button>
+      <button class="tab-button cancel-btn" (click)="dialogClose()">Hủy</button>
+    </div>
+  </ng-template>
+</ejs-dialog>

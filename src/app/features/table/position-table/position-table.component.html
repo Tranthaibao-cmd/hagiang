@@ -1,0 +1,79 @@
+
+<div class="control-section">
+  <ejs-treegrid
+    *ngIf="positionList"
+    #treegrid
+    [dataSource]="positionList"
+    childMapping="children"
+    [treeColumnIndex]="0"
+    allowPaging="true"
+    [pageSettings]="pageSettings"
+    [toolbar]="toolbar"
+    [allowSorting]="true"
+    [editSettings]="editSettings"
+    [searchSettings]="searchSettings"
+    (actionBegin)="actionBegin($event)"
+    (rowSelected)="rowSelected($event)"
+    (rowDeselected)="rowDeselected($event)"
+    (actionComplete)="actionComplete($event)"
+    expandStateMapping="expanded"
+    (created)="created()"
+    (commandClick)="commandClick($event)"
+    (dataBound)="dataBound($event)"
+    (load)="onLoad()"
+  >
+    <e-columns>
+      <e-column
+        field="ten"
+        headerText="Tên"
+        width="250"
+        textAlign="Left"
+        [allowEditing]="true"
+      ></e-column>
+      <e-column
+        field="cap"
+        headerText="Cấp"
+        width="100"
+        editType="dropdownedit"
+        [edit]="LevelParams"
+        textAlign="Left"
+        [allowEditing]="true"
+      >
+      <ng-template #template let-data>
+        {{getLevelName(data.cap)}}
+      </ng-template>
+      </e-column>
+      <e-column
+        field="mo_ta"
+        headerText="Mã"
+        width="100"
+        textAlign="Left"
+        [allowEditing]="true"
+      ></e-column>
+      <e-column
+        field="ngay_tao"
+        headerText="Ngày tạo"
+        width="100"
+        type="date"
+        [format]="{ type: 'date', format: 'yyyy-MM-dd' }"
+        textAlign="Left"
+        [allowEditing]="false"
+      ></e-column>
+      <e-column
+        headerText="Chức năng"
+        width="100"
+        textAlign="Left"
+        [commands]="commands"
+      ></e-column>
+    </e-columns>
+  </ejs-treegrid>
+</div>
+<app-position-dialog
+  [ma_chuc_vu]="selectedPosition"
+  (closeDialog)="closeDialog($event)"
+></app-position-dialog>
+
+<!-- <app-position-dialog
+  [ma_chuc_vu]="selectedPosition"
+  (closeDialog)="closeDialog($event)"
+></app-position-dialog> -->

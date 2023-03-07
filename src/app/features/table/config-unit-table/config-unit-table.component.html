@@ -1,0 +1,40 @@
+
+<div class="control-section" #backgroundgrid>
+  <ejs-grid
+    #grid
+    [dataSource]="unitList"
+    [locale]="'vi'"
+    allowPaging="true"
+    [pageSettings]="pageSettings"
+    [editSettings]="editSettings"
+    [toolbar]="toolbar"
+    [allowSorting]="true"
+    (actionBegin)="actionBegin($event)"
+    (dataBound)="dataBound($event)"
+    (load)="onLoad()"
+  >
+    <e-columns>
+      <e-column
+        field="ten_don_vi_tinh"
+        headerText="Tên đơn vị tính"
+        width="350"
+        textAlign="Left"
+        [validationRules]="{ required: [true, 'Tên đơn vị tính là bắt buộc'] }"
+      ></e-column>
+      <e-column
+        field="nguoi_tao"
+        headerText="Người tạo"
+        width="150"
+        textAlign="Center"
+        [allowEditing]="false"
+      ></e-column>
+      <e-column
+        field="ngay_tao"
+        headerText="Ngày tạo"
+        width="150"
+        textAlign="Center"
+        [allowEditing]="false"
+      ></e-column>
+    </e-columns>
+  </ejs-grid>
+</div>

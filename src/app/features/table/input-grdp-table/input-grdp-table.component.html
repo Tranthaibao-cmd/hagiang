@@ -1,0 +1,50 @@
+
+<div class="control-section">
+  <ejs-treegrid
+    #treegrid
+    *ngIf="grdpList"
+    [dataSource]="grdpList"
+    childMapping="children"
+    [treeColumnIndex]="0"
+    allowPaging="true"
+    allowTextWrap="true"
+    [pageSettings]="pageSettings"
+    [toolbar]="toolbar"
+    [allowSorting]="true"
+    [editSettings]="editSettings"
+    [searchSettings]="searchSettings"
+    (actionBegin)="actionBegin($event)"
+    expandStateMapping="expanded"
+    (dataBound)="dataBound($event)"
+    (load)="onLoad()"
+
+  >
+    <e-columns>
+      <e-column
+        field="ten"
+        headerText="Tên"
+        width="250"
+        textAlign="Left"
+        [allowEditing]="false"
+        [validationRules]="{ required: [true, 'Tên là bắt buộc'] }"
+      ></e-column>
+      <e-column
+        field="mo_ta"
+        headerText="Mã"
+        width="50"
+        textAlign="Left"
+        [allowEditing]="false"
+      ></e-column>
+      <e-column
+        *ngFor="let item of grdpHeader"
+        [field]="item.ma_dau_vao"
+        [headerText]="item.ten_dau_vao + ' (' + item.ten_don_vi_tinh + ')'"
+        width="100"
+        editType="numericedit"
+        [validationRules]="{ min: [1, 'Giá trị tối thiểu là 1'] }"
+        textAlign="Left"
+        [allowEditing]="item.ma_quyen ? true : false"
+      ></e-column>
+    </e-columns>
+  </ejs-treegrid>
+</div>

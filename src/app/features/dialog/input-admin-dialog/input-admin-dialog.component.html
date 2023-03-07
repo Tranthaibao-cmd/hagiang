@@ -1,0 +1,24 @@
+<ejs-dialog *ngIf="selectedUser" id="InputDialog" #InputDialog isModal="true" header="Giao chỉ tiêu"
+  (overlayClick)="close()" [visible]="true" [showCloseIcon]="true" (close)="close()" [target]="targetElement"
+  width="500px">
+  <ng-template #content>
+    <div>
+      <p *ngIf="roleInputList?.length == 0" style="margin-top: 1rem;">
+        Không có dữ liệu
+      </p>
+      <ng-container *ngIf="roleInputList?.length > 0">
+        <table style="width: 100%">
+          <tr *ngFor="let item of roleInputList">
+            <td style="padding: 10px"><input type="checkbox" [checked]="item.status==1"
+                (change)="change($event, item._id)" />{{
+              item.ten }}</td>
+          </tr>
+        </table>
+        <div style="display: flex; justify-content: right;">
+          <button class="tab-button save-btn" (click)="save()">Lưu</button>
+          <button class="tab-button cancel-btn" (click)="close()">Hủy</button>
+        </div>
+      </ng-container>
+    </div>
+  </ng-template>
+</ejs-dialog>

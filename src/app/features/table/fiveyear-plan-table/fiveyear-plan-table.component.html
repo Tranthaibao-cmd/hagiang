@@ -1,0 +1,56 @@
+<div class="control-section">
+    <ejs-treegrid #treegrid *ngIf="planList" [dataSource]="planList" allowPaging="true" childMapping="children"
+      [treeColumnIndex]="0" [pageSettings]="pageSettings" [toolbar]="toolbar" [allowSorting]="true"
+      (created)="created($event)" (dataBound)="dataBound($event)" (toolbarClick)="clickHandler($event)" (load)="onLoad()"
+      (mouseover)="mouseOver($event)" allowTextWrap="true" (rowDataBound)="rowDataBound($event)" (editSettings)="editSettings" >
+      <e-columns>
+        <e-column field="ten_chi_tieu" headerText="Tên chỉ tiêu" width="200" isPrimaryKey="true" textAlign="Left" >
+        </e-column>
+        <!-- <e-column field="ke_hoach_duoc_giao" headerText="Kế hoạch tổng thể" width="100" textAlign="Left">
+          <ng-template #template let-data>
+            <input
+              *ngIf="(user.cap==='6' && data.don_vi_hanh_chinh == user.rolename) ||(user.cap === '7' && data.so_quan_ly === organized) || (user.cap === '2' && organized?.split('_').length > 1 && data.don_vi_hanh_chinh === user.ten_phong) || (user.cap === '3' && organized?.split('_').length > 1 && data.phong_quan_ly === organized?.split('_').pop()); else templateKH"
+              type="text" min="0" [ngModel]="getValue(data._id, data.ke_hoach_duoc_giao, 'ke_hoach_duoc_giao')"
+              class="input-number" (change)="changeKeHoach($event, data, 'ke_hoach_duoc_giao')" mask="separator"
+              thousandSeparator=".">
+            <ng-template #templateKH>
+              <div style="text-align: right; color: #22b24b">{{ data.ke_hoach_duoc_giao }}</div>
+            </ng-template>
+          </ng-template>
+        </e-column> -->
+        <e-column field="ke_hoach" headerText="Kế hoạch giao xuống" width="150" textAlign="Left">
+          <ng-template #template let-data>
+            <input *ngIf="['2', '3', '6', '7'].includes(user.cap);else templateName" type="text" min="0"
+              [ngModel]="getValue(data._id, data.ke_hoach, 'ke_hoach')" class="input-number"
+              (change)="changeKeHoach($event, data, 'ke_hoach')" mask="separator" thousandSeparator=".">
+            <!-- <ejs-numerictextbox *ngIf="['2', '3', '6', '7'].includes(user.cap);else templateName" class="custom-enumeric"
+              format="n2" min="0" placeholder="Nhập kế hoạch" [value]="getValue(data._id, data.ke_hoach, 'ke_hoach')"
+              (change)="changeKeHoach($event, data, 'ke_hoach')">
+            </ejs-numerictextbox>-->
+            <ng-template #templateName>
+              <div style="text-align: right; color: #22b24b">
+                {{ data.ke_hoach }}
+              </div>
+            </ng-template>
+          </ng-template>
+        </e-column>
+        <e-column field="ten_don_vi" width="150" headerText="Đơn vị" textAlign="center">
+        </e-column>
+        <!-- <e-column field="mo_ta" headerText="Mô tả" width="100" textAlign="Left">
+          <ng-template #template let-data>
+            <div class="e-input-group" *ngIf="['2', '3', '6', '7'].includes(user.cap);else temp">
+              <input class="e-input" type="text" placeholder="Nhập mô tả" (focus)="focusIn($event.target)"
+                (blur)="focusOut($event.target)" (change)="changeMoTa($event, data)"
+                [value]="getValue(data._id, data.mo_ta, 'mo_ta')" />
+            </div>
+            <ng-template #temp style="color: #22b24b">{{
+              data.mo_ta
+              }}</ng-template>
+          </ng-template>
+        </e-column> -->
+      </e-columns>
+    </ejs-treegrid>
+    <div style="padding: 10px 0;"><b>Chú thích:</b><i> Dữ liệu hiển thị màu xanh là dữ liệu người dùng không có quyền sửa,
+        xóa</i></div>
+  </div>
+  

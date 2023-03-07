@@ -1,0 +1,139 @@
+<div class="background-menu-bar">
+  <div class="background-image" [class]="show ? '' : 'bg-close'">
+    <div class="sidebar-area" [class]="show ? '' : 'side-bar-close'">
+      <div class="logo-area">
+        <img src="../../../assets/logo/logo.png" class="logo" />
+      </div>
+      <ul class="menu-item-area">
+        <li *ngFor="let item of menuItems" class="main-menu">
+          <a *ngIf="item?.url" (click)="toggleMenu(item.mainMenu, item.selected)" class="menu-content"
+            [routerLink]="[item?.url]" [ngStyle]="
+              item.selected
+                ? { backgroundColor: '#03A678', color: '#fff' }
+                : {}
+            ">
+            <i [class]="item.icon" class="menu-icon"></i><span>{{ item.mainMenu }}</span><i class="fas fa-chevron-right"
+              [class]="item.selected ? 'menu-arrow-down' : 'menu-arrow'" *ngIf="item.subMenu != undefined"></i>
+          </a>
+
+          <a *ngIf="!item?.url" (click)="toggleMenu(item.mainMenu, item.selected)" class="menu-content" [ngStyle]="
+              item.selected
+                ? { backgroundColor: '#03A678', color: '#fff',margin:'0px 10px', borderRadius:'5px' }
+                : {}
+            ">
+            <i [class]="item.icon" class="menu-icon"></i><span>{{ item.mainMenu }}</span><i class="fas fa-chevron-right"
+              [class]="item.selected ? 'menu-arrow-down' : 'menu-arrow'" *ngIf="item.subMenu != undefined"></i></a>
+          <ul *ngIf="item.selected" class="sub-menu-bg">
+            <li *ngFor="let i of item.subMenu" class="sub-menu-container">
+              <a *ngIf="i" [routerLink]="[i.url]" routerLinkActive="selected-menu" class="sub-menu-content">
+                <span class="sub-menu-icon"><i class="fas fa-circle"></i></span> {{ i.name }}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="menu-area">
+    <div class="right-area" [class]="show ? '' : 'right-close'">
+      <div class="bar-btn-container"><button (click)="Toggle()" class="bar-btn"><i class="fas fa-bars"></i></button>
+      </div>
+
+      <div class="name-group" style="font-size:15px">{{ title | uppercase }}</div>
+
+      <div class="container row align-items-center" style='text-align:center;width:20%'>
+        <div class='col-md-12'>
+          <div style='color:white;font-size:15px'>{{myHours | date:'HH:mm:ss dd/MM/yyy'}}</div>
+        </div>
+
+      </div>
+
+      <div class="container row align-items-center" style='text-align:center;width:10%'>
+      </div>
+
+      <!-- <a href="mailto:ngoctoan1105@gmail.com">ngoctoan1105@gmail.com</a> -->
+      <!-- <a href="tel:0366907223">Call 0366907223</a> -->
+      <div class="user-area">
+        <div class="current-date"> Chào, <span style='color:#d6fb0a'> {{user?.sub}} </span> </div>
+        <div class="dropdown">
+          <!-- <div class="icon-menu">
+            <i class="icon fas fa-bell"></i><span class="badge bg-success">4</span>
+          </div>
+          <div class="icon-menu">
+            <i class="icon fas fa-envelope"></i><span class="badge bg-danger">8</span>
+          </div>
+          <div class="icon-menu"><i class="icon fas fa-cog"></i></div> -->
+          <button (click)="onClick()" class="dropdown-show" type="button" appOutside
+            (clickedOutside)="selected = false">
+            <img [src]="user?.anh_dai_dien || '../../../assets/img/avatar.jpg'" class="user-avatar" />
+
+            <ul class="dropdown-menu" [class]="selected ? 'dropdown-open' : ''">
+              <div style="display : flex ; align-items: center;margin: 0px 10px;">
+                <img [src]="
+                user.anh_dai_dien || '../../../assets/img/broken-image.png'
+              " class="user-avatar" />
+                <div style="display: flex; flex-direction: column; padding: 0px 10px; border-bottom: 1px solid gray;
+                width: 85%;">
+                  <span style="height: 30px;
+                  line-height: 30px;
+                  font-weight: 500;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  overflow: hidden;
+                  display: block;">{{user?.ten_day_du}}</span>
+                  <span style="height: 30px;
+                  line-height: 30px;
+                  font-weight: 400;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  overflow: hidden;
+                  display: block;">{{user?.email}}</span>
+                </div>
+              </div>
+              <li class="dropdown-content">
+                <img src="../../../assets/img/LockKey.svg" alt="">
+                <a [routerLink]="['/doi-mat-khau']" class="btn">Đổi mật khẩu</a>
+              </li>
+              <li class="dropdown-content">
+                <img src="../../../assets/img/AddressBook.svg" alt="">
+                <a [routerLink]="['/thong-tin']" class="btn">Thông tin</a>
+              </li>
+              <li class="dropdown-content">
+                <img src="../../../assets/img/SignOut.svg" alt="">
+                <a (click)="logout()" class="btn" style="color:
+                #FD3F42;">Đăng xuất</a>
+              </li>
+              <li class="dropdown-content">
+                <i class="fas fa-question-circle" style="color: #575757; font-size: 24px;"></i>
+                <a (click)="downloadIntro()" class="btn">Hướng dẫn sử dụng</a>
+              </li>
+            </ul>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 70px;">
+      <!-- <div style=" margin: 20px;">
+
+        <img src="../../../assets/img/background.jpg" style="width: 100%; height: auto;">
+      </div> -->
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+<div class="contact-support">
+  <div class="contact-section">
+    <div class="contact-img">
+      <img src="../../../assets/img/zalo.png" />
+    </div>
+    <a class="contact-content zalo" target="_blank" href="https://zalo.me/0123456789">Zalo: 012.345.6789</a>
+  </div>
+  <div class="contact-section">
+    <div class="contact-img mail">
+      <img src="../../../assets/img/gmail.png" />
+    </div>
+    <a class="contact-content gmail" href="mailto:test@gmail.com">
+      Mail: test@gmail.com
+    </a>
+  </div>
+</div>
+<!-- <div [ngStyle]="selected ? { display: 'block' } : { display: 'none' }" (click)="onClick()" class="background-modal"></div> -->

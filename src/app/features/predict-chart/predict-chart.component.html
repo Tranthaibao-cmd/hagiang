@@ -1,0 +1,57 @@
+
+<div class="control-section" *ngIf="data?.length > 0; else tempData" #bggrid>
+  <!-- <ejs-dropdownlist [dataSource]="chartType" [value]="type.text" (change)="changeChartType($event)" width="40%">
+  </ejs-dropdownlist> -->
+  <div align="center" *ngFor="let i of length">
+    <ejs-chart id='dashed-chartcontainer' style="display: block; height: 450px" align="center" #chart [title]="title" [primaryXAxis]="primaryXAxis"
+      [primaryYAxis]="primaryYAxis" [tooltip]="tooltip" (load)="load($event)" [chartArea]="chartArea"
+      [zoomSettings]="zoomSettings" [legendSettings]="legendSettings">
+      <e-series-collection>
+        <ng-container *ngFor="let d of data; let i = index">
+          <e-series [dataSource]="data[i].real" [type]="type.value" xName="sort_date" yName="gia_tri"
+            [name]="d.ten_chi_tieu" width="2" [marker]="marker">
+          </e-series>
+          <e-series [dataSource]="data[i].predict" [type]="type.value" xName="sort_date" yName="gia_tri"
+            [name]="'Dự báo ' + d.ten_chi_tieu" dashArray='5' width="2" [marker]="marker" class="dashed-chartcontainer-custom">
+          </e-series>
+        </ng-container>
+      </e-series-collection>
+    </ejs-chart>
+  </div>
+  <!-- <form [formGroup]="chartForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Tên biểu đồ<span style="color: red">*</span></label>
+      <input type="text" class="form-control" formControlName="name" data-msg-containerid="NameError" />
+      <div id="NameError" [style.display]="
+          (Name.invalid && (Name.dirty || Name.touched)) ||
+          (Name.invalid && submitClicked)
+            ? 'block'
+            : 'none'
+        ">
+        <label *ngIf="Name.errors?.required; else error" class="e-error" for="name" style="display: block">*Tên biểu đồ
+          là bắt buộc</label>
+        <ng-template #error>
+          <label *ngIf="Name.errors?.NameError" class="e-error" for="UserName" style="display: block">*Tên biểu đồ không
+            chứa ký tự đặc biệt và không được để trống</label>
+        </ng-template>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Mô tả</label>
+      <input type="text" class="form-control" formControlName="desc" />
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-success" [disabled]="chartForm.invalid">
+        Lưu
+      </button>
+      <button type="button" class="btn btn-primary" style="margin-left: 10px" *ngIf="chartData._id"
+        (click)="downloadChart(chartData._id)">
+        Tải biểu đồ
+      </button>
+    </div>
+  </form> -->
+</div>
+<ng-template #tempData>
+  <div style="width: 100%; text-align: center"><img src="../../../assets/img/deselectedChart.jpg"
+      style="max-width: 100%" /></div>
+</ng-template>

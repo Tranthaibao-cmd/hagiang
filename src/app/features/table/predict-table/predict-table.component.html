@@ -1,0 +1,19 @@
+<div class="control-section">
+  <ejs-treegrid #treegrid *ngIf="statisticalList" [dataSource]="statisticalList" childMapping="children"
+    [treeColumnIndex]="1" allowPaging="true" [pageSettings]="pageSettings" [selectionSettings]="selectOptions"
+    [toolbar]="toolbar" [allowSorting]="true" [editSettings]="editSettings" [searchSettings]="searchSettings"
+    (actionBegin)="actionBegin($event)" [allowFiltering]="true" [filterSettings]="filterSettings"
+    (toolbarClick)="clickHandler($event)" expandStateMapping="expanded" (dataBound)="dataBound($event)"
+    (load)="onLoad()" allowTextWrap="true">
+    <e-columns>
+      <e-column type="checkbox" width="50"></e-column>
+      <e-column field="ten_chi_tieu" headerText="Tên chỉ tiêu" width="250" textAlign="Left" [allowFiltering]="false"
+        isPrimaryKey="true"></e-column>
+      <e-column field="gia_tri" [headerText]="'Giá trị'" width="100" textAlign="Left" editType="numericedit"
+        [allowFiltering]="true" format="N2"></e-column>
+        <e-column field="uoc_tinh" headerText="Ước tính" width="100" textAlign="Left" editType="numericedit"
+        [allowFiltering]="true" format="N2"></e-column>
+      <!-- <e-column headerText='' width='30' [commands]='commands'></e-column> -->
+    </e-columns>
+  </ejs-treegrid>
+</div>

@@ -1,0 +1,50 @@
+<div class="bg-layout">
+  <div class="right-section" #backgroundgrid>
+    <div class="statis-section">
+      <h1 class="title-table">{{'Bảng thống kê giá trị chỉ tiêu' | uppercase}}</h1>
+      <div style="padding-bottom:10px ;">
+        <div class="container row" style="padding: 0; margin: 0;">
+          <div class='col-md-4' style="padding-right: 5px; padding-left: 5px;">
+            <ejs-dropdownlist #typeDrop [dataSource]="typeData" [fields]="fields" [popupHeight]="height"
+              placeholder="Loại kỳ" [value]="currentType" (change)="change($event, 'type')" floatLabelType="Always">
+            </ejs-dropdownlist>
+          </div>
+          <div class='col-md-4' style="padding-right: 5px; padding-left: 5px;">
+            <ejs-dropdownlist #periodDrop [dataSource]="periodData" [fields]="fields" [popupHeight]="height"
+              placeholder="Kỳ nhập liệu" [value]="currentPeriod" (change)="change($event, 'period')"
+              floatLabelType="Always">
+            </ejs-dropdownlist>
+          </div>
+          <div class='col-md-4' style="padding-right: 5px; padding-left: 5px;">
+            <ejs-dropdownlist [dataSource]="yearData" [fields]="fields" [popupHeight]="height" placeholder="Năm"
+              [value]="currentYear" (change)="change($event, 'year')" floatLabelType="Always">
+            </ejs-dropdownlist>
+          </div>
+          <!-- <div class='col-md-3' >
+              <button style='background-color:#1153fc;color:white;border:none;border-radius: 5px;font-size:14px;height: 75%;margin-top:10px'
+                  (click)="reloadData()">
+                  <i class="fas fa-sync-alt"></i>
+                  Cập nhật dữ liệu
+              </button>
+          </div> -->
+        </div>
+      </div>
+      <app-statistical-table [currentPeriod]="currentPeriod" [currentYear]="currentYear"
+        (clickChart)="onClickChart($event)" [reload]="reload"></app-statistical-table>
+    </div>
+    <div class="chart-section">
+      <div>
+        <app-statistical-chart-sidebar [chartName]="chartName" (selectChart)="onSelectChart($event)">
+        </app-statistical-chart-sidebar>
+      </div>
+      <h1 class="title-table">Biểu đồ</h1>
+      <app-statistical-chart [data_id]="data_id" class="mt-20"></app-statistical-chart>
+    </div>
+    <div class="grid-section" *ngIf="gridData">
+      <app-statistical-grid [gridData]="gridData"></app-statistical-grid>
+    </div>
+  </div>
+  <!-- <div class="left-section">
+   
+  </div> -->
+</div>

@@ -1,0 +1,51 @@
+
+<div class="control-section" #backgroundgrid>
+  <ejs-treegrid
+    #treegrid
+    [dataSource]="grdpList"
+    childMapping="children"
+    [treeColumnIndex]="0"
+    allowPaging="true"
+    [pageSettings]="pageSettings"
+    [toolbar]="toolbar"
+    [allowSorting]="true"
+    [editSettings]="editSettings"
+    [searchSettings]="searchSettings"
+    (actionBegin)="actionBegin($event)"
+    (rowSelected)="rowSelected($event)"
+    (rowDeselected)="rowDeselected($event)"
+    (actionComplete)="actionComplete($event)"
+    expandStateMapping="expanded"
+    (dataBound)="dataBound($event)"
+    (created)="created()"
+    (load)="onLoad()"
+  >
+    <e-columns>
+      <e-column
+        field="ten"
+        headerText="Tên"
+        width="250"
+        textAlign="Left"
+        [allowEditing]="true"
+        [validationRules]="{ required: [true, 'Tên là bắt buộc'] }"
+      ></e-column>
+      <e-column
+        field="mo_ta"
+        headerText="Mã"
+        width="100"
+        textAlign="Left"
+        [validationRules]="{ min: [1, 'Giá trị tối thiểu là 1'] }"
+        [allowEditing]="true"
+      ></e-column>
+      <e-column
+        field="ngay_tao"
+        headerText="Ngày tạo"
+        width="100"
+        textAlign="Center"
+        type="date"
+        [format]="{ type: 'date', format: 'yyyy-MM-dd' }"
+        [allowEditing]="false"
+      ></e-column>
+    </e-columns>
+  </ejs-treegrid>
+</div>

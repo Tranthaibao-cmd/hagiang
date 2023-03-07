@@ -1,0 +1,11 @@
+<div class="control-section" *ngIf="gridData.length>0" #bggrid>
+  <ejs-grid #grid [dataSource]="gridData" allowPaging="true" [pageSettings]="pageSettings"
+    [allowSorting]="true" (dataBound)="dataBound($event)" (load)="onLoad()" style="margin: 20px 0;"
+    allowTextWrap="true">
+    <e-columns>
+      <e-column field="name" headerText="Tên chỉ tiêu" width="250" textAlign="Left"></e-column>
+      <e-column field="gia_tri" headerText="Giá trị" width="80" textAlign="Left"></e-column>
+      <e-column field="ngay_nhap_lieu" headerText="Ngày nhập liệu" width="120" textAlign="Left"></e-column>
+    </e-columns>
+  </ejs-grid>
+</div>

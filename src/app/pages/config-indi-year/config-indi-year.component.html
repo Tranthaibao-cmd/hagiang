@@ -1,0 +1,33 @@
+<div class="background-layout">
+  <h1 class="title-table">{{'Danh sách chỉ tiêu hàng năm' | uppercase}}</h1>
+  <div class="selection-container">
+    <ejs-dropdownlist #yearDrop [dataSource]="yearData" (change)="change($event)" [width]="120" [value]="currentYear"
+      placeholder="Chọn năm" floatLabelType="Always" class="custom-dropdown"></ejs-dropdownlist>
+  </div>
+  <div *ngIf="indiYearList">
+    <ejs-treegrid #treegrid [dataSource]="indiYearList" childMapping="children" [treeColumnIndex]="0" allowPaging="true"
+      [pageSettings]="pageSettings" [toolbar]="toolbar" [allowSorting]="true" [searchSettings]="searchSettings"
+      (toolbarClick)="clickHandler($event)" (dataBound)="dataBound($event)" expandStateMapping="expanded"
+      allowTextWrap="true" (load)="onLoad()">
+      <e-columns>
+        <e-column field="ten_chi_tieu" headerText="Tên chỉ tiêu" width="250" textAlign="Left" isPrimaryKey="true">
+        </e-column>
+        <e-column field="ma_nhom_nguoi_dung" headerText="Cơ quan cung cấp" width="250" textAlign="Left">
+          <ng-template #template let-data>
+            <ejs-multiselect
+              *ngIf="(user.cap==='7' && (data.cot_loi === 1 || data.so_quan_ly === user.roleid)) || (user.cap==='6' && data.cot_loi === 0 && data.so_quan_ly === user.roleid) || user.cap == '2' || (user.cap==3 && ((data.cot_loi == 0 && data.don_vi_hanh_chinh == 'UBND tỉnh Hà Giang')||data.phong_quan_ly.includes(user.roleid + '_' + user.ma_phong))); else temp"
+              [dataSource]="userGroupList" [fields]="{ text: 'name', value: 'id' }" placeholder="Chọn cơ quan cung cấp"
+              [ngModel]="data.ma_nhom_nguoi_dung" [filterBarPlaceholder]="filterPlaceholder" [mode]="mode" [ignoreAccent]='true'
+              showSelectAll="true" (change)="changeRole($event, data.ma_chi_tieu)" class="customize-multiselect">
+            </ejs-multiselect>
+            <ng-template #temp>
+              <div style="color: #22b24b">{{ data.ten_nhom_nguoi_dung.join(', ')}}</div>
+            </ng-template>
+          </ng-template>
+        </e-column>
+      </e-columns>
+    </ejs-treegrid>
+    <div style="padding: 10px 0;"><b>Chú thích:</b> <i>Dữ liệu hiển thị màu xanh là dữ liệu người dùng không có quyền
+        sửa, xóa</i></div>
+  </div>
+</div>

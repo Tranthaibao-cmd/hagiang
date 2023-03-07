@@ -1,0 +1,127 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+  background-color: #edf5fd !important;
+}
+@font-face {
+  font-family: "VarelaRound";
+  src: local("VarelaRound"),
+    url(./assets/font/VarelaRound-Regular.ttf) format("truetype");
+}
+@media only screen and (min-width: 1367px) {
+  body {
+    font-size: 16px !important;
+  }
+  .svg-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+}
+@media only screen and (max-width: 1366px) {
+  body {
+    font-size: 14px !important;
+  }
+  .svg-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+  }
+}
+
+@import "~bootstrap/scss/bootstrap";
+
+.background-layout {
+  width: 96%;
+  max-width: 96%;
+  margin: 20px auto !important;
+  padding: 20px;
+  border-radius: 10px;
+  font-family: "VarelaRound", Arial, Helvetica, sans-serif;
+  background-color: #fff;
+  overflow-x: hidden;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+}
+.m-30 {
+  margin: 30px;
+}
+.mr-30 {
+  margin-right: 30px;
+}
+.ml-30 {
+  margin-left: 30px;
+}
+.mt-30 {
+  margin-top: 30px;
+}
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+.m-20 {
+  margin: 20px;
+}
+.mr-20 {
+  margin-right: 20px;
+}
+.ml-20 {
+  margin-left: 20px;
+}
+.mt-20 {
+  margin-top: 20px;
+}
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.pr-30 {
+  padding-right: 30px;
+}
+.pl-30 {
+  padding-left: 30px;
+}
+.pt-30 {
+  padding-top: 30px;
+}
+.pb-30 {
+  padding-bottom: 30px;
+}
+
+.pr-20 {
+  padding-right: 20px;
+}
+.pl-20 {
+  padding-left: 20px;
+}
+.pt-20 {
+  padding-top: 20px;
+}
+.pb-20 {
+  padding-bottom: 20px;
+}
+
+ul {
+  padding: 0;
+  li {
+    list-style: none;
+  }
+}
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-calendars/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-dropdowns/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-inputs/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-navigations/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-grids/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-grids/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-treegrid/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-lists/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-dropdowns/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-buttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-popups/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-icons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-richtexteditor/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-inputs/styles/material.css";
+@import "~katex/dist/katex.css";

@@ -1,0 +1,98 @@
+<div class="background-layout">
+  <form [formGroup]="infoForm" (ngSubmit)="submit()">
+    <div class="form-group">
+      <img [src]="(uploadedAvatar == '' || uploadedAvatar == undefined)?  user.anh_dai_dien : uploadedAvatar" class="avatar" />
+      <label class="custom-label" for="anh_dai_dien">Ảnh đại diện</label>
+      <input
+        placeholder="Ảnh đại diện"
+        type="file"
+        class="avatar-form"
+        id="anh_dai_dien"
+        (change)="onUploadedFile($event)"
+        accept="image/*"
+      />
+    </div>
+    <div class="form-group">
+      <label class="custom-label" for="ten_day_du">Họ tên</label>
+      <input
+        placeholder="Họ tên"
+        type="text"
+        class="form-control"
+        id="ten_day_du"
+        floatLabelType="Always"
+        formControlName="ten_day_du"
+      />
+      <div
+        *ngIf="
+          formNameCtrl.invalid && (formNameCtrl.dirty || formNameCtrl.touched)
+        "
+        class="e-error"
+      >
+        <div *ngIf="formNameCtrl.errors.required" class="error-text">
+          Thuộc tính là bắt buộc.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="custom-label" for="so_dien_thoai">Số điện thoại</label>
+      <input
+        placeholder="Số điện thoại"
+        type="tel"
+        class="form-control"
+        id="so_dien_thoai"
+        floatLabelType="Always"
+        formControlName="so_dien_thoai"
+      />
+    </div>
+    <div class="form-group">
+      <label class="custom-label" for="email">Email</label>
+      <input
+        placeholder="Email"
+        type="email"
+        class="form-control"
+        id="email"
+        minlength="4"
+        floatLabelType="Always"
+        formControlName="email"
+      />
+      <div
+        *ngIf="formEmailCtrl.invalid && formEmailCtrl.touched"
+        class="e-error"
+      >
+        <div *ngIf="formEmailCtrl.errors.required" class="error-text">
+          Thuộc tính là bắt buộc.
+        </div>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="btn btn-primary form-control"
+      (click)="return()"
+      style="
+        background-color: #15ac21;
+        border-color: #15ac21;
+        border-radius: 2;
+        width: auto;
+        padding: 10px;
+        float: right;
+      "
+    >
+      Trở lại
+    </button>
+    <button
+      type="submit"
+      class="btn btn-primary form-control"
+      style="
+        background-color: #1976d2;
+        border-color: #1976d2;
+        border-radius: 2;
+        width: auto;
+        padding: 10px;
+        margin-right: 10px;
+        float: right;
+      "
+    >
+      Lưu
+    </button>
+  </form>
+</div>

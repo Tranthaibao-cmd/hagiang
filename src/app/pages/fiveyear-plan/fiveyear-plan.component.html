@@ -1,0 +1,35 @@
+<div class="background-layout" #backgroundgrid>
+  <h1 class="title-table">{{'Kế hoạch giao chỉ tiêu hàng năm cho các đơn vị' | uppercase}}</h1>
+  <div class="option-container">
+    <div class="selection-container">
+      <ejs-dropdownlist class="selection-item" [dataSource]="yearData" width="120px" [popupHeight]="height"
+        placeholder="Năm" [value]="currentYear" (change)="change($event, 'year')" floatLabelType="Always">
+      </ejs-dropdownlist>
+      <!-- <ejs-dropdownlist *ngIf="user.cap != 1" class="selection-item" [dataSource]="organData" width="200px"
+        [fields]='fields' [popupHeight]="height" placeholder="Cơ quan cung cấp" [value]="organized"
+        (change)="change($event, 'organize')" floatLabelType="Always"></ejs-dropdownlist> -->
+
+        <!-- <ejs-dropdownlist *ngIf="user.cap == '7'" class="selection-item" [dataSource]="indiGroupList" width="200px"
+        [fields]='branchFields' [popupHeight]="height" placeholder="Ngành" (change)="change($event, 'branch')" floatLabelType="Always"></ejs-dropdownlist>
+         -->
+      <!-- <ejs-dropdownlist class="selection-item" [dataSource]="indiGroupList" width="200px"
+        [fields]='branchFields' [popupHeight]="height" placeholder="Ngành" (change)="change($event, 'branch')" floatLabelType="Always"></ejs-dropdownlist> -->
+
+      <!-- <ejs-dropdownlist id="branch" [dataSource]="branchData" [fields]="fields" [popupHeight]="height" placeholder="Ngành"
+        [value]="currentBranch" (change)="change($event, 'loai_ct')" floatLabelType="Always">
+      </ejs-dropdownlist> -->
+
+      </div>
+
+    <!-- <button class="download-button" *ngIf="user.cap == 7">
+      <a (click)="getDownloadURL()" class="file-excel"><img src="../../../assets/img/excel-down.png"
+          class="excel-icon" />Tải file xuống</a>
+    </button> -->
+    <button class="download-button">
+      <a (click)="getDownloadURL()" class="file-excel"><img src="../../../assets/img/excel-down.png"
+          class="excel-icon" />Tải file xuống</a>
+    </button>
+  </div>
+  <app-fiveyear-plan-table #fiveplanTable [selectedYear]="selectedYear">
+  </app-fiveyear-plan-table>
+</div>

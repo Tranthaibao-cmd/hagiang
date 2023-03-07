@@ -1,0 +1,5 @@
+
+  <app-high-report *ngIf="user.cap>= 6;else lowReport"></app-high-report>
+  <ng-template #lowReport>
+    <app-report></app-report>
+  </ng-template>

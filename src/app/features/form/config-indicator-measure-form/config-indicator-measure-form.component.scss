@@ -1,0 +1,66 @@
+::ng-deep {
+  .multiselect-custom {
+    & > .e-multiselect {
+      height: 38px !important;
+      & > .e-control-wrapper {
+        border: 1px solid #ced4da !important;
+        border-radius: 0.25rem !important;
+        padding: 0 0 0 16px !important;
+        & > .e-multi-select-wrapper {
+          line-height: 38px !important;
+          & > .e-input-group-icon {
+            margin: 10px 0 !important;
+          }
+        }
+      }
+    }
+  }
+  .dropdown-customize {
+    & > .e-input-group {
+      height: 38px !important;
+      line-height: 38px !important;
+      padding: 6px 0 6px 12px !important;
+    }
+  }
+}
+::ng-deep.katex-display {
+  width: 100% !important;
+  overflow-x: scroll !important;
+  overflow-y: hidden !important;
+}
+::ng-deep .e-dlg-overlay {
+  z-index: -1 !important;
+}
+::ng-deep .e-dlg-center-center,
+.e-dlg-left-center {
+  z-index: 1001 !important;
+}
+::ng-deep .tagify__dropdown {
+  z-index: 2001 !important;
+  .tagify__dropdown_wrapper {
+    z-index: 3001 !important;
+    .tagify__dropdown__item {
+      z-index: 4001 !important;
+    }
+  }
+}
+::ng-deep .e-popup.e-popup-open.e-dialog {
+  z-index: 1000 !important;
+}
+::ng-deep {
+  .cdk-textarea-autosize {
+    min-height: 38px !important;
+  }
+  .e-searcher > .e-dropdownbase {
+    height: 38px !important;
+  }
+  .e-delim-values {
+    font-size: 1rem !important;
+  }
+  // .multiselect-custom
+  //   > .e-multiselect
+  //   > .e-control-wrapper
+  .e-multi-select-wrapper .e-chips-close.e-close-hooker {
+    margin-top: -4.2em !important;
+  }
+}

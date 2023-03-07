@@ -1,0 +1,14 @@
+<div class="sidebar-section">
+  <ejs-dropdownlist #typeDrop [dataSource]="chartList" [fields]="fields" [popupHeight]="height"
+  placeholder="Danh mục biểu đồ" (change)="change($event)" floatLabelType="Always">
+  </ejs-dropdownlist>
+</div>
+<!-- <li class="title-sidebar">Danh mục biểu đồ</li> -->
+  <!-- <ejs-grid #grid [dataSource]="chartList" allowTextWrap="true" [allowPaging]="false" [allowReordering]="true"
+    [editSettings]="editSettings" [pageSettings]="pageSettings" [allowSorting]="true" (load)="onLoad()"
+    (rowSelected)="rowSelected($event)" (actionBegin)="actionBegin($event)" [searchSettings]="searchOptions" >
+    <e-columns>
+      <e-column field="ten_bieu_do" headerText="Tên biểu đồ" width="130" textAlign="Left"></e-column>
+      <e-column width="50" [commands]="commands"></e-column>
+    </e-columns>
+  </ejs-grid> -->

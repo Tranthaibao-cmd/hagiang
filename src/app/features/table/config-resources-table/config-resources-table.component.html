@@ -1,0 +1,33 @@
+
+<div class="control-section" #backgroundgrid>
+  <ejs-grid
+    #grid
+    [dataSource]="resourcesList"
+    locale="vi"
+    allowPaging="true"
+    [pageSettings]="pageSettings"
+    [editSettings]="editSettings"
+    [toolbar]="toolbar"
+    [allowSorting]="true"
+    (actionBegin)="actionBegin($event)"
+    (dataBound)="dataBound($event)"
+    (load)="onLoad()"
+  >
+    <e-columns>
+      <e-column
+        field="ten_tai_nguyen"
+        headerText="Tên tài nguyên"
+        width="200"
+        textAlign="Left"
+        [validationRules]="{ required: [true, 'Tên tài nguyên là bắt buộc'] }"
+      ></e-column>
+      <e-column
+        field="ten_nguoi_tao"
+        headerText="Người tạo"
+        width="50"
+        textAlign="Center"
+        [allowEditing]="false"
+      ></e-column>
+    </e-columns>
+  </ejs-grid>
+</div>

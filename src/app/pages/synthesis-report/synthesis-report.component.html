@@ -1,0 +1,253 @@
+<div class="background-container">
+  <div class="content-container">
+    <h1 class="report-title">{{'Báo cáo tổng hợp' | uppercase}}</h1>
+    <div *ngIf="list; else tempReport" class="synthesis-report">
+      <div class="main-menu">
+        <button (click)="Create()" class="custom-button add-button">
+          <i class="fas fa-plus"></i> Thêm báo cáo
+        </button>
+        <button *ngIf="!allowEdit" (click)="Edit()" class="custom-button edit-button">
+          <i class="far fa-edit"></i>Sửa báo cáo
+        </button>
+        <button *ngIf="list?.tieu_de != '' && list?.data.length > 0 && allowEdit && getCheck()" (click)="Save()"
+          class="custom-button save-button">
+          <i class="far fa-save"></i> Lưu báo cáo
+        </button>
+        <button *ngIf="list?._id" (click)="Delete(list?._id)" class="custom-button delete-button">
+          <i class="far fa-trash-alt"></i>Xóa báo cáo
+        </button>
+        <button *ngIf="!list?._id || allowEdit" (click)="Cancel()" class="custom-button cancel-button">
+          <i class="fas fa-times"></i> Hủy tạo
+        </button>
+        <!-- <button class="download-button" *ngIf="selectedTab == 'Báo cáo tổng hợp'">
+          <input type="file" id="uploadFile" (change)="onUploadedFile($event)"
+            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+          <label class="file-excel" for="uploadFile"><img src="../../../assets/img/excel-up.png"
+              class="excel-icon" />Tải file lên</label>
+        </button> -->
+        <button class="download-button" *ngIf="list?._id && selectedTab == 'Báo cáo tổng hợp'">
+          <a class="file-excel" (click)="downloadFile()"><img src="../../../assets/img/word-icon.jpg"
+              class="excel-icon" />Tải file xuống</a>
+        </button>
+      </div>
+      <div class="title-area">
+        <input [(ngModel)]="list.tieu_de" [readonly]="!allowEdit" class="title-input" placeholder="Tiêu đề" />
+      </div>
+      <div *ngIf="list?.loai_bao_cao == 'Báo cáo tổng hợp'">
+        <div class="report-area mt-5" *ngFor="let item of list?.data; index as inx">
+          <div *ngFor="let i of item; index as in" class="report-element"
+            [style.flexBasis]="item.length == 1 ? '100%' : '49%'" [style.maxWidth]="item.length == 1 ? '100%' : '49%'">
+            <div *ngIf="allowEdit" class="reload-area" (click)="Reload(inx, in)">
+              <i class="fas fa-sync-alt" style="font-size: 20px; color: #FF7B02"></i>
+            </div>
+            <div *ngIf="!i?.type && allowEdit" class="report-selection">
+              <button (click)="AddItem(inx, in, 'text')" class="btn-rs docs">
+                <img src="../../../assets/img/ArticleMedium.svg" alt="">
+                Văn bản
+              </button>
+              <button (click)="AddItem(inx, in, 'chart')" class="btn-rs chart">
+                <img src="../../../assets/img/ChartLineUp.svg" alt="">
+                Biểu đồ
+              </button>
+            </div>
+            <div *ngIf="i?.type == 'chart'" class="report-chart">
+              <div style="
+                  display: flex;
+                  justify-content: space-between;
+                  flex-wrap: wrap;
+                ">
+                <ejs-dropdownlist *ngIf="allowEdit" [dataSource]="listChart"
+                  [fields]="{ text: 'ten_bieu_do', value: '_id' }" placeholder="Chọn biểu đồ"
+                  [value]="list.data[inx][in].data._id" (change)="change($event, inx, in)" width="200px"
+                  style="display: inline-block"></ejs-dropdownlist>
+                <ejs-dropdownlist *ngIf="allowEdit && list.data[inx][in].data.data?.length > 0" [dataSource]="chartType"
+                  [value]="list.data[inx][in].line.text" (change)="changeChartType($event, inx, in)" width="200px"
+                  style="display: inline-block"></ejs-dropdownlist>
+              </div>
+              <div *ngIf="allowEdit && list.data[inx][in].data == []">
+                <label for="chart-file">Chọn file hoặc thả vào đây!</label>
+                <input type="file" id="chart-file" name="chart-file" style="display: none" />
+              </div>
+              <div class="control-section" *ngIf="list.data[inx][in].data.data?.length > 0">
+                <div align="center" *ngFor="let i of length">
+                  <ejs-chart style="display: block; height: 450px" align="center" #chart
+                    [title]="list.data[inx][in].data.ten_bieu_do" [primaryXAxis]="getXAxisType(list.data[inx][in].data)"
+                    [primaryYAxis]="primaryYAxis" [tooltip]="{ enable: allowEdit ? true : false }" (load)="load($event)"
+                    [chartArea]="chartArea" [legendSettings]="allowEdit ? legendVisible : legendHidden">
+                    <e-series-collection>
+                      <e-series *ngFor="
+                          let d of list.data[inx][in].data.data;
+                          let i = index
+                        " [dataSource]="formatDate(list.data[inx][in].data.data[i].chartdata)"
+                        [type]="list.data[inx][in].line.value" xName="ngay_nhap_lieu" yName="gia_tri"
+                        [name]="d.ten_chi_tieu" width="2" [marker]="marker">
+                      </e-series>
+                    </e-series-collection>
+                  </ejs-chart>
+                </div>
+                <p style="margin: 0">
+                  <b>Mô tả:</b> {{ list.data[inx][in].data.mo_ta }}
+                </p>
+              </div>
+            </div>
+            <div *ngIf="i?.type == 'text'" class="report-text">
+              <div class="title-text">Văn bản</div>
+              <ejs-richtexteditor *ngIf="allowEdit; else htmlText" #Editor [id]="'editor' + inx + in"
+                [toolbarSettings]="tools" [(value)]="i.data"></ejs-richtexteditor>
+              <ng-template #htmlText>
+                <div [innerHTML]="i.data"></div>
+              </ng-template>
+            </div>
+          </div>
+          <div *ngIf="allowEdit" class="close-area">
+            <i class="fas fa-window-close close-button" (click)="list.data.splice(inx, 1)"></i>
+          </div>
+        </div>
+        <div style="text-align: center" *ngIf="allowEdit">
+          <button class="create-new" (click)="list.data.push([{}])">
+            <i class="far fa-folder"></i>
+          </button>
+          <button class="create-new" (click)="list.data.push([{}, {}])">
+            <i class="far fa-folders"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <ng-template #tempReport>
+      <div style="width: 100%; text-align: center; padding: 50px 0;">
+        <div style="width: 100%; text-align: center;"><img src="../../../assets/img/deselectedReport.jpg"
+            style="max-width: 100%;"></div>
+        <button
+          style="border: none; background-color: #368FE7; border-radius: 5px; padding: 10px 30px; color: #fff; margin-top: 20px;"
+          (click)="Create()">Tạo báo cáo</button>
+      </div>
+    </ng-template>
+    <!-- <div class="synthesis-report" *ngIf="list?.loai_bao_cao == 'Báo cáo cùng kỳ'">
+      <div class="period-menu">
+        <ejs-dropdownlist
+          *ngIf="allowEdit"
+          [dataSource]="listYear"
+          placeholder="Chọn năm"
+          (change)="changeYear($event)"
+          [value]="selectedYear"
+          width="200px"
+          style="display: inline-block; margin-right: 10px"
+        ></ejs-dropdownlist>
+        <ejs-multiselect
+          *ngIf="allowEdit"
+          [dataSource]="listIndicator"
+          [fields]="{ text: 'ten_chi_tieu', value: 'ma_chi_tieu' }"
+          placeholder="Chọn chỉ tiêu"
+          [value]="selectedValue"
+          mode="Checkbox"
+          (change)="changeIndicator($event)"
+        ></ejs-multiselect>
+      </div>
+      <div *ngIf="list?.data.length > 0 && list">
+        <div class="period-content" *ngFor="let item of list.data">
+          <ejs-chart
+            style="display: block; height: 300px"
+            align="center"
+            class="period-item"
+            #chart
+            [tooltip]="{ enable: true }"
+            [title]="'Biểu đồ cùng kỳ năm ' + selectedYear"
+            [primaryXAxis]="primaryXAxis"
+            [primaryYAxis]="primaryYAxis"
+            (load)="load($event)"
+            [chartArea]="chartArea"
+          >
+            <e-series-collection>
+              <e-series
+                *ngFor="let d of item.du_lieu_bd; let i = index"
+                [dataSource]="d.chartdata"
+                type="Column"
+                xName="ky"
+                yName="gia_tri"
+                [name]="d.ngay_nhap_lieu.split('-')[2]"
+                width="2"
+                [marker]="marker"
+              >
+              </e-series>
+            </e-series-collection>
+          </ejs-chart>
+          <div class="period-item" style="padding: 10px">
+            <pre>{{ item.nhan_xet }}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="synthesis-report"
+      *ngIf="list?.loai_bao_cao == 'Báo cáo kế hoạch'"
+    >
+      <div class="period-menu">
+        <ejs-multiselect
+          *ngIf="allowEdit"
+          [dataSource]="listIndicator"
+          [fields]="{ text: 'ten_chi_tieu', value: 'ma_chi_tieu' }"
+          placeholder="Chọn chỉ tiêu"
+          [value]="selectedValue"
+          mode="Checkbox"
+          (change)="changeIndicator($event)"
+        ></ejs-multiselect>
+      </div>
+      <div *ngIf="list?.data.length > 0 && list">
+        <div class="period-content" *ngFor="let item of list.data">
+          <ejs-chart
+            style="display: block; height: 300px"
+            align="center"
+            class="period-item"
+            #chart
+            [tooltip]="{ enable: true }"
+            [title]="'Biểu đồ thống kê'"
+            [primaryXAxis]="primaryXAxis"
+            [primaryYAxis]="primaryYAxis"
+            (load)="load($event)"
+            [chartArea]="chartArea"
+          >
+            <e-series-collection>
+              <e-series
+                *ngFor="let d of item.data; let i = index"
+                [dataSource]="d.chartdata"
+                type="Column"
+                xName="ngay_nhap_lieu"
+                yName="gia_tri"
+                [name]="d.ngay_nhap_lieu.split('-')[2]"
+                width="2"
+                [marker]="marker"
+              >
+              </e-series>
+            </e-series-collection>
+          </ejs-chart>
+          <div class="period-item" style="padding: 10px">
+            <pre *ngFor="let i of item.mo_ta">{{ i }}</pre>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  <div class="menu-selection-container">
+    <div class="ms-title title-active">
+      <h3 class="report-title">Danh sách báo cáo</h3>
+
+      <ul class="ms-list list-open">
+        <ng-container *ngIf="listReport?.length> 0; else tempList">
+          <li class="ms-item" *ngFor="let item of listReport" [class]="list?._id == item._id ? 'item-active' : ''">
+            <span (click)="changeReportList(item._id)">{{ item.tieu_de }}</span>
+            <i class="far fa-cogs" (click)="configRole(item._id)"></i>
+          </li>
+        </ng-container>
+        <ng-template #tempList>
+          <li class="ms-item">Danh sách rỗng</li>
+        </ng-template>
+      </ul>
+    </div>
+  </div>
+  <ejs-dialog *ngIf="roleList && selectedId" #InputDialog isModal="true" header="Chia sẻ quyền" (overlayClick)="close()"
+    [visible]="true" [showCloseIcon]="true" (close)="close()" [target]="targetElement" width="500px">
+    <ng-template #content>
+      <ejs-multiselect [dataSource]="roleList" [fields]="{ text: 'ten', value: 'id' }" placeholder="Chọn quyền"
+        [value]="selectedRoleList" mode="Checkbox" (change)="changeRole($event)"></ejs-multiselect>
+    </ng-template>
+  </ejs-dialog>

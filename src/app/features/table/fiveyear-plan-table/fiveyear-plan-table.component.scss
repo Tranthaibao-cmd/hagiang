@@ -1,0 +1,60 @@
+.custom-drlist {
+}
+.input-number::-webkit-outer-spin-button,
+.input-number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.input-number{
+  width: 100%;
+  text-align: right;
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid #949494;
+  padding: 5px;
+}
+/* Firefox */
+.input-number {
+  -moz-appearance: textfield;
+}
+::ng-deep.e-save_2:before {
+  content: "\e735";
+  color: #fff !important;
+}
+::ng-deep.custom-enumeric {
+  text-align: right;
+  margin-right: 0 !important;
+}
+::ng-deep {
+  .add-toolbar-btn {
+    background-color: #368fe7 !important;
+  }
+  .edit-toolbar-btn {
+    background-color: #FFAF00 !important;
+  }
+  .delete-toolbar-btn {
+    background-color: #FD3F42 !important;
+  }
+  .save-toolbar-btn {
+    background-color: #39B894 !important;
+  }
+  .cancel-toolbar-btn {
+    background-color: #A6A6A6 !important;
+  }
+}
+// ::ng-deep.row-disable {
+//   opacity: 0.65 !important;
+//   background-color: #d1d1d1 !important;
+//   -webkit-touch-callout: none !important; /* iOS Safari */
+//   -webkit-user-select: none !important; /* Safari */
+//   -khtml-user-select: none !important; /* Konqueror HTML */
+//   -moz-user-select: none !important; /* Old versions of Firefox */
+//   -ms-user-select: none !important; /* Internet Explorer/Edge */
+//   user-select: none !important;
+//   & > .e-rowcell {
+//     font-style: italic !important;
+//   }
+//   & > td.e-active {
+//     background-color: #d1d1d1 !important;
+//   }
+// }

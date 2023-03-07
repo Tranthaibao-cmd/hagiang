@@ -1,0 +1,177 @@
+<form
+  [formGroup]="userForm"
+  (ngSubmit)="submit()"
+  style="padding: 20px; overflow: scroll"
+>
+  <div class="form-group">
+    <label id="demoSmart" for="user_name"
+      >Tên tài khoản<span style="color: red">*</span></label
+    >
+    <input
+      placeholder="Tên tài khoản"
+      type="text"
+      class="form-control"
+      id="user_name"
+      floatLabelType="Always"
+      formControlName="user_name"
+    />
+    <div
+      *ngIf="
+        formUserNameCtrl.invalid &&
+        (formUserNameCtrl.dirty || formUserNameCtrl.touched)
+      "
+      class="e-error"
+    >
+      <div *ngIf="formUserNameCtrl.errors.required" class="error-text">
+        Thuộc tính là bắt buộc.
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="password">Mật khẩu<span class="role">*</span></label>
+    <div class="input-group">
+      <input
+        placeholder="Mật khẩu"
+        [type]="typePass ? 'password' : 'text'"
+        class="form-control"
+        id="password"
+        floatLabelType="Always"
+        formControlName="password"
+        style="border-right: 0"
+      />
+      <div class="input-group-append">
+        <span
+          class="input-group-text"
+          (click)="typePass = !typePass"
+          style="background-color: #fff; border-left: 0"
+          ><img class="svg-icon" [src]="typePass ? showSvg : hideSvg"
+        /></span>
+      </div>
+    </div>
+    <div
+      *ngIf="
+        formPasswordCtrl.invalid &&
+        (formPasswordCtrl.dirty || formPasswordCtrl.touched)
+      "
+      class="e-error"
+    >
+      <div *ngIf="formPasswordCtrl.errors.required" class="error-text">
+        Thuộc tính là bắt buộc.
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="roleid">Quyền quản trị<span class="role">*</span></label>
+    <select formControlName="roleid">
+      <option *ngFor="let item of roleList" [value]="item.id">
+        {{ item.name_user_group }}
+      </option>
+    </select>
+    <div
+      *ngIf="
+        formRoleIdCtrl.invalid &&
+        (formRoleIdCtrl.dirty || formRoleIdCtrl.touched)
+      "
+      class="e-error"
+    >
+      <div *ngIf="formRoleIdCtrl.errors.required" class="error-text">
+        Thuộc tính là bắt buộc.
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="full_name">Tên người dùng<span class="role">*</span></label>
+    <input
+      placeholder="Tên người dùng"
+      type="text"
+      class="form-control"
+      id="full_name"
+      floatLabelType="Always"
+      formControlName="full_name"
+    />
+    <div
+      *ngIf="
+        formFullNameCtrl.invalid &&
+        (formFullNameCtrl.dirty || formFullNameCtrl.touched)
+      "
+      class="e-error"
+    >
+      <div *ngIf="formFullNameCtrl.errors.required" class="error-text">
+        Thuộc tính là bắt buộc.
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="phone_number">Số điện thoại</label>
+    <input
+      placeholder="Số điện thoại"
+      type="tel"
+      class="form-control"
+      id="phone_number"
+      floatLabelType="Always"
+      formControlName="phone_number"
+    />
+    <div
+      *ngIf="
+        formPhoneNumberCtrl.invalid &&
+        (formPhoneNumberCtrl.dirty || formPhoneNumberCtrl.touched)
+      "
+      class="e-error"
+    >
+      <div *ngIf="formPhoneNumberCtrl.errors.required" class="error-text">
+        Thuộc tính là bắt buộc.
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email">Email<span class="role">*</span></label>
+    <input
+      placeholder="Email"
+      type="email"
+      class="form-control"
+      id="email"
+      minlength="4"
+      floatLabelType="Always"
+      formControlName="email"
+    />
+    <div *ngIf="formEmailCtrl.invalid && formEmailCtrl.touched" class="e-error">
+      <div *ngIf="formEmailCtrl.errors.required" class="error-text">
+        Thuộc tính là bắt buộc.
+      </div>
+      <div *ngIf="formEmailCtrl.errors.minlength" class="error-text">
+        Name must be at least 4 characters long.
+      </div>
+    </div>
+  </div>
+  <button
+    type="submit"
+    class="btn btn-primary form-control"
+    style="
+      background-color: #1976d2;
+      border-color: #1976d2;
+      border-radius: 2;
+      width: auto;
+      padding: 10px;
+      float: right;
+    "
+  >
+    Lưu
+  </button>
+  <button
+    type="button"
+    class="btn btn-primary form-control"
+    style="
+      background-color: #fff;
+      color: #1976d2;
+      border-color: #1976d2;
+      border-radius: 2;
+      width: auto;
+      margin-right: 10px;
+      padding: 10px;
+      float: right;
+    "
+    (click)="onCancel()"
+  >
+    Hủy
+  </button>
+</form>

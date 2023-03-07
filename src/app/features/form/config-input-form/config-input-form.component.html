@@ -1,0 +1,107 @@
+<form
+  [formGroup]="inputForm"
+  (ngSubmit)="submit()"
+  style="padding: 20px; overflow: scroll"
+>
+<div class="form-group">
+  <label for="id_indi">Mã<span style="color: red">*</span></label>
+  <input
+    placeholder="Mã"
+    type="text"
+    class="form-control"
+    id="id_indi"
+    floatLabelType="Always"
+    formControlName="id_indi"
+    (click)="error = ''"
+  />
+  <div
+    *ngIf="
+      formIdIndiCtrl.invalid && (formIdIndiCtrl.dirty || formIdIndiCtrl.touched)
+    "
+    class="e-error"
+  >
+    <div *ngIf="formIdIndiCtrl.errors.required" class="error-text">
+      Thuộc tính là bắt buộc.
+    </div>
+  </div>
+  <div *ngIf="error" class="error-text">{{ error }}</div>
+</div>
+  <div class="form-group">
+    <label for="name">Tên đầu vào chỉ tiêu<span style="color: red">*</span></label>
+    <input
+      placeholder="Tên đầu vào chỉ tiêu"
+      type="text"
+      class="form-control"
+      id="name"
+      floatLabelType="Always"
+      formControlName="name"
+      (click)="error = ''"
+    />
+    <div
+      *ngIf="
+        formNameCtrl.invalid && (formNameCtrl.dirty || formNameCtrl.touched)
+      "
+      class="e-error"
+    >
+      <div *ngIf="formNameCtrl.errors.required" class="error-text">
+        Thuộc tính là bắt buộc.
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="roleid">Đơn vị nhập liệu<span style="color: red">*</span></label>
+    <select id="roleid" formControlName="roleid">
+      <option *ngFor="let item of roleList" value="{{ item.id }}">
+        {{ item.name_user_group }}
+      </option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="unit">Đơn vị<span style="color: red">*</span></label>
+    <select id="unit" formControlName="unit">
+      <option *ngFor="let item of unitList" value="{{ item }}">
+        {{ item }}
+      </option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="period">Kỳ<span style="color: red">*</span></label>
+    <select id="period" formControlName="period">
+      <option *ngFor="let item of periodList" value="{{ item }}">
+        {{ item }}
+      </option>
+    </select>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-primary form-control"
+    style="
+      background-color: #1976d2;
+      border-color: #1976d2;
+      border-radius: 2;
+      width: auto;
+      padding: 10px;
+      float: right;
+    "
+  >
+    Lưu
+  </button>
+  <button
+    type="button"
+    class="btn btn-primary form-control"
+    style="
+      background-color: #fff;
+      color: #1976d2;
+      border-color: #1976d2;
+      border-radius: 2;
+      width: auto;
+      margin-right: 10px;
+      padding: 10px;
+      float: right;
+    "
+    (click)="onCancel()"
+  >
+    Hủy
+  </button>
+</form>

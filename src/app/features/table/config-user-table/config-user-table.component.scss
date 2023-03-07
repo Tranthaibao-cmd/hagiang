@@ -1,0 +1,71 @@
+input[type="checkbox"] {
+  width: 100%;
+}
+.form-group.col-md-6 {
+  width: 250px;
+}
+:-ms-fullscreen,
+.e-dialog.e-edit-dialog {
+  max-width: 552px;
+}
+.form-group.col-md-6 {
+  width: 250px;
+}
+
+#ShipAddress {
+  resize: vertical;
+}
+:-ms-fullscreen,
+.e-dialog.e-edit-dialog {
+  max-width: 552px;
+}
+
+label.e-float-text {
+  pointer-events: all !important;
+}
+.form-group {
+  margin-bottom: 0.5em !important;
+}
+::ng-deep .e-grid .e-toolbar .e-search-icon {
+  display: none !important;
+}
+.showPass {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: auto;
+  height: 30px;
+  line-height: 30px;
+  i {
+    font-size: 13px;
+  }
+}
+.require_property {
+  color: red;
+}
+.e-MT_Recurrence:before {
+  content: "\e308";
+}
+.e-M_Properties:before {
+  content: "\e679";
+}
+.custom-drlist {
+}
+.func-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  .trans-button{
+    background-color: transparent;
+    border: none;
+    text-align: left;
+    padding: 5px 20px;
+    margin-left: 30px;
+    i{
+      padding-right: 20px;
+    }
+    &:hover{
+      background-color: rgba(0,0,0,.0348);
+    }
+  }
+}

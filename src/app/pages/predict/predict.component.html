@@ -1,0 +1,48 @@
+<div class="bg-layout">
+    <div class="right-section">
+        <div class="statis-section">
+            <h1 class="title-table">{{'Bảng dự báo giá trị chỉ tiêu' | uppercase}}</h1>
+            <div class="filter-order mb-20">
+                <div class="filter-area">
+                    <div class="selection-container">
+                        <ejs-dropdownlist #typeDrop id="type" [dataSource]="typeData" [fields]="fields" [popupHeight]="height"
+                            placeholder="Loại kỳ" [value]="currentType" (change)="change($event, 'type')" floatLabelType="Always">
+                        </ejs-dropdownlist>
+                    </div>
+                    <div class="selection-container">
+                        <ejs-dropdownlist #periodDrop [dataSource]="periodData" [fields]="{ text: 'name', value: 'value' }"
+                            [popupHeight]="height" width="120px" placeholder="Kỳ nhập liệu" [value]="currentPeriod"
+                            (change)="change($event, 'period')" floatLabelType="Always"></ejs-dropdownlist>
+                    </div>
+                    <div class="selection-container">
+                        <ejs-dropdownlist [dataSource]="yearData" [fields]="{ text: 'name', value: 'value' }"
+                            [popupHeight]="height" width="120px" placeholder="Năm" [value]="currentYear"
+                            (change)="change($event, 'year')" floatLabelType="Always"></ejs-dropdownlist>
+                    </div>
+                    <div class="selection-container">
+                        <ejs-dropdownlist [dataSource]="periodNumberData" [popupHeight]="height" width="120px"
+                            placeholder="Số kỳ" [value]="currentPeriodNumber" (change)="change($event, 'periodNumber')"
+                            floatLabelType="Always">
+                        </ejs-dropdownlist>
+                    </div>
+                </div>
+                <!-- <button class="reload-btn" (click)="reloadData()"><i class="fas fa-sync-alt"></i> Cập nhật dữ
+                    liệu</button> -->
+            </div>
+            <app-predict-table [currentPeriod]="currentPeriod" [currentYear]="currentYear"
+                [currentPeriodNumber]="currentPeriodNumber" (clickChart)="onClickChart($event)"
+                [reload]="reload"></app-predict-table>
+        </div>
+        <div class="chart-section">
+            <h1 class="title-table">Biểu đồ dự báo</h1>
+            <app-predict-chart [data]="data" class="mt-20"></app-predict-chart>
+        </div>
+        <!-- <div class="grid-section" *ngIf="gridData">
+        <app-statistical-grid [gridData]="gridData"></app-statistical-grid>
+      </div> -->
+    </div>
+    <!-- <div class="left-section">
+      <app-statistical-chart-sidebar [chartName]="chartName" (selectChart)="onSelectChart($event)">
+      </app-statistical-chart-sidebar>
+    </div> -->
+</div>

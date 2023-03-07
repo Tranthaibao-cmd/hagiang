@@ -1,0 +1,99 @@
+<div class="control-section" #backgroundgrid>
+  <h1 class="title-table">{{'Danh sách chỉ tiêu đã tạo hoặc được giao' | uppercase}}</h1>
+  <div class="selection-container">
+    <ejs-dropdownlist #yearDrop [dataSource]="yearData" (change)="change($event, 'year')" [value]="Year" [width]="120"
+      placeholder="Chọn năm" floatLabelType="Always"></ejs-dropdownlist>
+    <ejs-dropdownlist [dataSource]="indicatorGroupList" (change)="change($event, 'indi')" [width]="200"
+      placeholder="Chọn nhóm chỉ tiêu" [allowFiltering]='true' [ignoreAccent]='true' floatLabelType="Always" [fields]="indiGroupFields">
+    </ejs-dropdownlist>
+  </div>
+  <ejs-treegrid #grid *ngIf="indiList" [dataSource]="indiList" childMapping="children" [treeColumnIndex]="1"
+    allowPaging="true" [pageSettings]="pageSettings" [editSettings]="editSettings" [toolbar]="toolbar"
+    [allowSorting]="true" (actionBegin)="actionBegin($event)" (actionComplete)="actionComplete($event)"
+    allowTextWrap="true" (dataBound)="dataBound($event)" (toolbarClick)="clickHandler($event)" (load)="onLoad()">
+    <e-columns>
+      <e-column type="tt_ctn" headerText="" [allowSorting]="false" width="50">
+        <ng-template #headerTemplate let-data>
+          <input type="checkbox" [(ngModel)]="checkAll" (change)="checkedAll($event)" />
+        </ng-template>
+        <ng-template #template let-data>
+          <input type="checkbox" [checked]="getCheck(data.ma_chi_tieu, data.tt_ctn)" (change)="checked($event)"
+            [disabled]="!EditCondition(data) || !enableDropdown(data)" />
+        </ng-template>
+      </e-column>
+      <!-- <e-column field="stt" headerText="STT" width="50" textAlign="left"></e-column> -->
+      <e-column field="ma_chi_tieu" headerText="Mã" width="120" textAlign="Left" [isPrimaryKey]="true">
+        <ng-template #template let-data>
+          <span [style.color]="EditCondition(data)?'#000000de': '#22b24b'">{{data.ma_chi_tieu}}</span>
+        </ng-template>
+      </e-column>
+      <e-column field="ten_chi_tieu" headerText="Tên chỉ tiêu" width="250" textAlign="Left">
+        <ng-template #template let-data>
+          <pre [style.color]="EditCondition(data)?'#000000de': '#22b24b'" class="pre-tag">{{data.ten_chi_tieu}}</pre>
+        </ng-template>
+      </e-column>
+      <!-- comment congthuc -->
+      <!-- <e-column headerText="Tham số đầu vào" width="350">
+        <ng-template #template let-indiList>
+          <tagify *ngIf="input_items" [settings]="tagifySettings" [whitelist]="tagifyWhitelist$" [readonly]="true"
+            value="getInputTags(indiList.tham_so_dau_vao)">
+            {{ getInputTags(indiList.tham_so_dau_vao) }}
+          </tagify>
+        </ng-template>
+      </e-column> -->
+      <e-column field="ky_tinh" headerText="Định kỳ" width="100" editType="dropdownedit" [edit]="PeriodParams"
+        textAlign="Left" defaultValue="Năm">
+        <ng-template #template let-data>
+          <span [style.color]="EditCondition(data)?'#000000de': '#22b24b'">{{data.ky_tinh}}</span>
+        </ng-template>
+      </e-column>
+      <e-column field="don_vi_hanh_chinh" headerText="Đơn vị giao" width="150" editType="dropdownedit" [edit]="hcList"
+        textAlign="Left" defaultValue="Tỉnh Hà Giang">
+        <ng-template #template let-data>
+          <span [style.color]="EditCondition(data)?'#000000de': '#22b24b'">{{data.don_vi_hanh_chinh}}</span>
+        </ng-template>
+      </e-column>
+      <e-column field="ten_don_vi" headerText="Đơn vị" width="100" textAlign="Left">
+        <ng-template #template let-data>
+          <span [style.color]="EditCondition(data)?'#000000de': '#22b24b'">{{data.ten_don_vi}}</span>
+        </ng-template>
+      </e-column>
+      <!-- <e-column
+        field="ten_nhom_nguoi_dung"
+        headerText="Cơ quan cung cấp"
+        width="200"
+        textAlign="Left"
+      >
+        <ng-template #template let-data>
+          <div class="gradient-border">
+            <span
+              *ngFor="let item of data.ten_nhom_nguoi_dung"
+              class="gradient-bg"
+            >
+              {{ item }}
+            </span>
+          </div>
+        </ng-template>
+      </e-column> -->
+      <!-- <e-column *ngIf="user.cap !== '6'" field="ten_nhom_chi_tieu" headerText="Đơn vị quản lý" width="150"
+        textAlign="Left"></e-column> -->
+      <e-column field="cong_don" headerText="Phương pháp tính" width="120" textAlign="Left">
+        <ng-template let-data #template>
+          <span [style.color]="EditCondition(data)?'#000000de': '#22b24b'">{{ data.cong_don == 0 ? "Thay thế" : "Cộng
+            dồn"
+            }}</span>
+        </ng-template>
+      </e-column>
+    </e-columns>
+    <ng-template #editSettingsTemplate let-indicatorMeasureData="indicatorData" style="width: 50%">
+      <app-config-indicator-measure-form [(isAdd)]="grid_isAdd" [(indicatorMeasureData)]="indicatorData"
+        [hcList]="hcList" [periodList]="periodList" [input_items]="input_items" [indicatorsList]="indiList"
+        [indicatorDropdownlist]="indicatorList" [danhSachSo]="danhSachSo" [indiGroupList]="indiGroupList"
+        [unitList]="unitList" [userGroupList]="userGroupList" [administrativeUnits]="administrativeUnits"
+        [indicatorGroup]="indicatorGroup" #indicatorForm (mathFormulaChanged)="onFormularChanged($event)">
+      </app-config-indicator-measure-form>
+    </ng-template>
+  </ejs-treegrid>
+  <div style="padding: 10px 0;"><b>Chú thích:</b> <i>Dữ liệu hiển thị màu xanh là dữ liệu người dùng không có quyền sửa,
+      xóa</i></div>
+</div>

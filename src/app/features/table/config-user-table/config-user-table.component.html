@@ -1,0 +1,209 @@
+<div class="control-section" #backgroundgrid>
+  <ejs-grid #grid [dataSource]="userList" allowPaging="true" [pageSettings]="pageSettings" [editSettings]="editSettings"
+    [toolbar]="toolbar" [allowSorting]="true" allowTextWrap="true" (actionBegin)="actionBegin($event)"
+    (actionComplete)="actionComplete($event)" (created)="created($event)" (dataBound)="dataBound($event)"
+    (load)="onLoad()">
+    <e-columns>
+      <e-column field="ten_nguoi_dung" headerText="Tên đăng nhập" width="100" textAlign="Left" [isPrimaryKey]="true"
+        [allowEditing]="true"></e-column>
+      <e-column field="mat_khau" headerText="Mật khẩu" width="100" textAlign="Left" [visible]="false"></e-column>
+      <e-column field="ten_day_du" headerText="Họ tên" width="100" textAlign="Left"></e-column>
+      <e-column field="so_dien_thoai" headerText="Số điện thoại" width="80" textAlign="Left"></e-column>
+      <e-column field="ma_quyen_nguoi_dung" headerText="Quyền quản trị" width="100" textAlign="Left">
+        <ng-template #template let-data>
+          {{ data.ten_quyen_nguoi_dung }}
+        </ng-template>
+      </e-column>
+      <e-column field="ma_chuc_vu" headerText="Chức vụ" width="100" textAlign="Left">
+        <ng-template #template let-data>
+          {{ data.ten_chuc_vu }}
+        </ng-template>
+      </e-column>
+      <e-column field="email" headerText="Email" width="150" textAlign="Center"></e-column>
+      <e-column headerText="Chức năng" width="150" textAlign="Center">
+        <ng-template #template let-data>
+          <div class="func-container">
+            <!-- <button class="trans-button" (click)="InputConfig(data)"><i class="fas fa-cog"></i>Quyền nhập liệu</button> -->
+            <button class="trans-button" (click)="ResetPassword(data)"><i class="fas fa-sync-alt"></i>Đặt lại mật
+              khẩu</button>
+            <button class="trans-button" (click)="Active(data)"><i class="fas fa-user-check"></i>{{data.trang_thai ?
+              'Khoá' : 'Kích
+              hoạt'}}</button>
+            <button class="trans-button" (click)="GiveVriteria(data)"><i class="fas fa-cogs"></i>Giao chỉ tiêu</button>
+          </div>
+        </ng-template>
+      </e-column>
+    </e-columns>
+    <ng-template #editSettingsTemplate let-data style="width: 500px">
+      <div [formGroup]="userForm">
+        <div class="form-row" *ngIf="DialogType == 'add'">
+          <div class="form-group col-md-12">
+            <div class="e-float-input e-control-wrapper">
+              <input formControlName="ten_nguoi_dung" data-msg-containerid="UsernameError" id="ten_nguoi_dung"
+                name="ten_nguoi_dung" type="text" />
+              <label class="e-float-text e-label-top">Tên đăng nhập*</label>
+            </div>
+            <div id="UsernameError" [style.display]="
+                (UserName.invalid && (UserName.dirty || UserName.touched)) ||
+                (UserName.invalid && submitClicked)
+                  ? 'block'
+                  : 'none'
+              ">
+              <label *ngIf="UserName.errors?.required; else error" class="e-error" for="UserName"
+                style="display: block">*Tên đăng nhập là bắt buộc</label>
+              <ng-template #error>
+                <label *ngIf="UserName.errors?.UsernameError" class="e-error" for="UserName" style="display: block">*Tên
+                  đăng nhập tối thiểu 4 ký tự gồm chữ thường viết liền
+                  không dấu, số và dấu gạch dưới</label>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div class="form-row" *ngIf="DialogType == 'add'">
+          <div class="form-group col-md-12">
+            <div class="e-float-input e-control-wrapper">
+              <input formControlName="mat_khau" data-msg-containerid="PassError" id="mat_khau" name="mat_khau"
+                [type]="showPass ? 'text' : 'password'" />
+              <div (click)="showPass = !showPass" class="showPass">
+                <i [class]="showPass ? showIcon : hideIcon"></i>
+              </div>
+              <label class="e-float-text e-label-top" for="mat_khau">Mật khẩu*</label>
+            </div>
+            <div id="PassError" [style.display]="
+                (Password.invalid && (Password.dirty || Password.touched)) ||
+                (Password.invalid && submitClicked)
+                  ? 'block'
+                  : 'none'
+              ">
+              <label *ngIf="Password.errors?.required; else passError" class="e-error" for="mat_khau"
+                style="display: block">*Mật khẩu là bắt buộc</label>
+              <ng-template #passError>
+                <label *ngIf="Password.errors?.PassError" class="e-error" for="mat_khau" style="display: block">*Mật
+                  khẩu dài từ 6-20 ký tự, gồm chữ hoa, chữ thường, số và
+                  ký tự đặc biệt</label>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <div class="e-float-input e-control-wrapper">
+              <input formControlName="ten_day_du" data-msg-containerid="FullNameError" id="ten_day_du" name="ten_day_du"
+                type="text" />
+              <label class="e-float-text e-label-top" for="ten_day_du">Họ tên*</label>
+            </div>
+            <div id="FullNameError" [style.display]="
+                (FullName.invalid && (FullName.dirty || FullName.touched)) ||
+                (FullName.invalid && submitClicked)
+                  ? 'block'
+                  : 'none'
+              ">
+              <label *ngIf="FullName.errors?.required" class="e-error" for="ten_day_du" style="display: block">*Họ tên
+                là bắt buộc</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <div class="e-float-input e-control-wrapper">
+              <input formControlName="so_dien_thoai" data-msg-containerid="TelError" id="so_dien_thoai"
+                name="so_dien_thoai" type="text" />
+              <label class="e-float-text e-label-top" for="so_dien_thoai">Số điện thoại</label>
+            </div>
+            <div id="TelError" [style.display]="
+                (Tel.invalid && (Tel.dirty || Tel.touched)) ||
+                (Tel.invalid && submitClicked)
+                  ? 'block'
+                  : 'none'
+              ">
+              <label *ngIf="Tel.errors?.TelError" class="e-error" for="so_dien_thoai" style="display: block">*SDT không
+                hợp lệ</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <ejs-dropdownlist #role [dataSource]="roleList" formControlName="ma_quyen_nguoi_dung"
+              data-msg-containerid="IndiError" [fields]="{ text: 'ten', value: '_id' }"
+              (filtering)="onFiltering($event)" filterBarPlaceholder="Tìm kiếm" [allowFiltering]="true"
+              [ignoreAccent]='true' placeholder="Chọn quyền quản lý*" floatLabelType="Always"
+              (change)="roleChange($event)" class="custom-drlist"></ejs-dropdownlist>
+            <div id="IndiError" [style.display]="
+                (Indicator.invalid && (Indicator.dirty || Indicator.touched)) ||
+                (Indicator.invalid && submitClicked)
+                  ? 'block'
+                  : 'none'
+              ">
+              <label *ngIf="Indicator.errors?.required" class="e-error" for="ma_quyen_nguoi_dung"
+                style="display: block">*Quyền quản lý là bắt buộc</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <ejs-dropdownlist #district [dataSource]="districtList" formControlName="ma_phong"
+              data-msg-containerid="DistrictError" [fields]="{ text: 'ten_phong', value: 'ma_phong' }"
+              (filtering)="onFiltering($event)" filterBarPlaceholder="Tìm kiếm" [allowFiltering]="true"
+              [ignoreAccent]='true' placeholder="Chọn phòng" floatLabelType="Always" class="custom-drlist"
+              (change)="districtChange($event)" [enabled]="DistrictEnabled"></ejs-dropdownlist>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <ejs-dropdownlist #position [dataSource]="positionList" formControlName="ma_chuc_vu"
+              data-msg-containerid="PositionError" [fields]="{ text: 'ten', value: '_id' }"
+              (filtering)="onFiltering($event)" filterBarPlaceholder="Tìm kiếm" [allowFiltering]="true"
+              [ignoreAccent]='true' placeholder="Chọn cấp quản lý" floatLabelType="Always" class="custom-drlist"
+              [enabled]="PositionEnabled">
+            </ejs-dropdownlist>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <div class="e-float-input e-control-wrapper">
+              <input formControlName="chuc_vu" data-msg-containerid="PositionError" id="chuc_vu" name="chuc_vu"
+                type="text" />
+              <label class="e-float-text e-label-top">Chức vụ</label>
+            </div>
+            <!-- <div id="UsernameError" [style.display]="
+                (UserName.invalid && (UserName.dirty || UserName.touched)) ||
+                (UserName.invalid && submitClicked)
+                  ? 'block'
+                  : 'none'
+              ">
+              <label *ngIf="UserName.errors?.required; else error" class="e-error" for="UserName"
+                style="display: block">*Tên đăng nhập là bắt buộc</label>
+              <ng-template #error>
+                <label *ngIf="UserName.errors?.UsernameError" class="e-error" for="UserName" style="display: block">*Tên
+                  đăng nhập tối thiểu 4 ký tự gồm chữ thường viết liền
+                  không dấu, số và dấu gạch dưới</label>
+              </ng-template>
+            </div> -->
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <div class="e-float-input e-control-wrapper">
+              <input formControlName="email" data-msg-containerid="EmailError" id="email" name="email" type="text" />
+              <label class="e-float-text e-label-top" for="email">Email*</label>
+            </div>
+            <div id="EmailError" [style.display]="
+                (Email.invalid && (Email.dirty || Email.touched)) ||
+                (Email.invalid && submitClicked)
+                  ? 'block'
+                  : 'none'
+              ">
+              <label *ngIf="Email.errors?.required; else EmailError" class="e-error" for="email"
+                style="display: block">*Email là bắt buộc</label>
+              <ng-template #EmailError>
+                <label *ngIf="Email.errors?.email" class="e-error" for="email" style="display: block">*Email không hợp
+                  lệ. Ví dụ: example123@example.com</label>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ejs-grid>
+</div>
+<app-input-admin-dialog [selectedUser]="selectedUser" (closeDialog)="closeDialog($event)"></app-input-admin-dialog>

@@ -1,0 +1,63 @@
+<form
+  [formGroup]="userGroupForm"
+  (ngSubmit)="submit()"
+  style="padding: 20px; overflow: scroll"
+>
+  <div class="form-group">
+    <label for="name_user_group"
+      >Tên nhóm người dùng<span style="color: red">*</span></label
+    >
+    <input
+      placeholder="Tên nhóm người dùng"
+      type="text"
+      class="form-control"
+      id="name_user_group"
+      floatLabelType="Always"
+      formControlName="name_user_group"
+      (click)="error = ''"
+    />
+    <div
+      *ngIf="
+        formNameUserGroupCtrl.invalid &&
+        (formNameUserGroupCtrl.dirty || formNameUserGroupCtrl.touched)
+      "
+      class="e-error"
+    >
+      <div *ngIf="formNameUserGroupCtrl.errors.required" class="error-text">
+        Thuộc tính là bắt buộc.
+      </div>
+    </div>
+    <div *ngIf="error" class="error-text">{{ error }}</div>
+  </div>
+  <button
+    type="submit"
+    class="btn btn-primary form-control"
+    style="
+      background-color: #1976d2;
+      border-color: #1976d2;
+      border-radius: 2;
+      width: auto;
+      padding: 10px;
+      float: right;
+    "
+  >
+    Lưu
+  </button>
+  <button
+    type="button"
+    class="btn btn-primary form-control"
+    style="
+      background-color: #fff;
+      color: #1976d2;
+      border-color: #1976d2;
+      border-radius: 2;
+      width: auto;
+      margin-right: 10px;
+      padding: 10px;
+      float: right;
+    "
+    (click)="onCancel()"
+  >
+    Hủy
+  </button>
+</form>

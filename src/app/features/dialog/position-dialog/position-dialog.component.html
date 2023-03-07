@@ -1,0 +1,37 @@
+<ejs-dialog
+  *ngIf="resourceList && ma_chuc_vu"
+  id="InputDialog"
+  #InputDialog
+  isModal="true"
+  [header]="'Cài đặt quyền tài nguyên'"
+  (overlayClick)="close()"
+  [visible]="true"
+  [showCloseIcon]="true"
+  (close)="close()"
+  [target]="targetElement"
+  width="500px"
+>
+  <ng-template #content>
+    <div>
+      <p *ngIf="resourceList?.length == 0" style="margin-top: 1rem">
+        Người dùng không có quyền truy cập vào bất kỳ tài nguyên nào
+      </p>
+      <ul *ngIf="resourceList?.length > 0" style="width: 100%">
+        <li style="padding: 10px">
+          <ejs-checkbox
+            [label]="'Tất cả'"
+            (change)="changeResources($event, 'all')"
+            [checked]="isAll"
+          ></ejs-checkbox>
+        </li>
+        <li *ngFor="let item of resourceList" style="padding: 10px">
+          <ejs-checkbox
+            [label]="item.ten_tai_nguyen"
+            (change)="changeResources($event, item.ten_tai_nguyen)"
+            [checked]="item.co_quyen == 1"
+          ></ejs-checkbox>
+        </li>
+      </ul>
+    </div>
+  </ng-template>
+</ejs-dialog>

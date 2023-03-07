@@ -1,0 +1,21 @@
+<div class="background-layout">
+  <h1 class="title-table">{{'Thời gian nhập liệu' | uppercase}}</h1>
+  <div *ngIf="inputTimeList">
+    <ejs-grid #grid [dataSource]="inputTimeList" allowPaging="true" [pageSettings]="pageSettings" [toolbar]="toolbar"
+      [allowSorting]="true" (dataBound)="dataBound($event)" allowTextWrap="true" (load)="onLoad()">
+      <e-columns>
+        <e-column field="ten" headerText="Tên chỉ tiêu" width="250" textAlign="Left" isPrimaryKey="true">
+        </e-column>
+        <e-column field="expire_day" headerText="Thời gian nhập liệu" width="50" textAlign="Left">
+          <ng-template #template let-data>
+            <ejs-dropdownlist [dataSource]="dateList" [value]="data.expire_day" [popupHeight]="height"
+              [allowFiltering]='true' (change)="change($event, data.ma)">
+            </ejs-dropdownlist>
+          </ng-template>
+        </e-column>
+      </e-columns>
+    </ejs-grid>
+    <div style="padding: 10px 0;"><b>Chú thích:</b> <i>Dữ liệu hiển thị màu xanh là dữ liệu người dùng không có quyền
+        sửa, xóa</i></div>
+  </div>
+</div>

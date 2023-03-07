@@ -1,0 +1,284 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css" />
+<form [formGroup]="inputForm" (ngSubmit)="submit()">
+  <!-- <button (click)="show()">click</button> -->
+  <div class="form-row">
+    <!-- <button (click)="show()">shows</button> -->
+    <div class="form-group col-md-6">
+      <label for="ma_chi_tieu">Mã<span style="color: red">*</span></label>
+      <input placeholder="Mã" type="text" class="form-control" id="ma_chi_tieu" floatLabelType="Always"
+        formControlName="ma_chi_tieu" [(ngModel)]="indicatorMeasureData.ma_chi_tieu" [readonly]="!isAdd" />
+      <div *ngIf="
+          form_ma_chi_tieu_Ctrl.invalid &&
+          (form_ma_chi_tieu_Ctrl.dirty || form_ma_chi_tieu_Ctrl.touched)
+        " class="e-error">
+        <div *ngIf="form_ma_chi_tieu_Ctrl.errors.required" class="error-text">
+          Thuộc tính là bắt buộc.
+        </div>
+        <div *ngIf="form_ma_chi_tieu_Ctrl.errors.ma_chi_tieu_Invalid" class="error-text">
+          Đã có mã chỉ tiêu khác trùng giá trị.
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="ma_hien_thi">Chỉ tiêu cha</label>
+      <ejs-dropdownlist id="ma_hien_thi" [dataSource]="indicatorDropdownlist" [value]="indicatorMeasureData.ma_hien_thi"
+        formControlName="ma_hien_thi" [(ngModel)]="indicatorMeasureData.ma_hien_thi" (filtering)='onFiltering($event)'
+        [fields]="ParentIndiFields" class="dropdown-customize" filterBarPlaceholder="Tìm kiếm" [allowFiltering]="true"
+        [ignoreAccent]='true' [enabled]="enableDropdown(indicatorMeasureData)">
+      </ejs-dropdownlist>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="ten_chi_tieu">Tên chỉ tiêu<span style="color: red">*</span></label>
+      <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="5" formControlName="ten_chi_tieu" class="form-control" placeholder="Tên chỉ tiêu"
+        id="ten_chi_tieu" floatLabelType="Always" [(ngModel)]="indicatorMeasureData.ten_chi_tieu"
+        (ngModelChange)="triggerResize($event)" style="min-height: 40px !important"
+        [readonly]="!enableDropdown(indicatorMeasureData)"></textarea>
+      <div *ngIf="
+          form_ten_chi_tieu_Ctrl.invalid &&
+          (form_ten_chi_tieu_Ctrl.dirty || form_ten_chi_tieu_Ctrl.touched)
+        " class="e-error">
+        <div *ngIf="form_ten_chi_tieu_Ctrl.errors.required" class="error-text">
+          Thuộc tính là bắt buộc.
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="ma_loai_ct">Nhóm chỉ tiêu<span style="color: red">*</span></label>
+      <ejs-dropdownlist id="ma_loai_ct" [dataSource]="indicatorGroup" [value]="indicatorMeasureData.ma_loai_ct"
+        formControlName="ma_loai_ct" [(ngModel)]="indicatorMeasureData.ma_loai_ct"
+        [fields]="{text: 'ten_nhom_chi_tieu', value: 'id'}" class="dropdown-customize"
+        [enabled]="enableDropdown(indicatorMeasureData)">
+      </ejs-dropdownlist>
+      <!-- <select id="ma_loai_ct" formControlName="ma_loai_ct" class="form-control"
+        [(ngModel)]="indicatorMeasureData.ma_loai_ct"
+        [attr.disabled]="enableDropdown(indicatorMeasureData)">
+        <option *ngFor="let item of indicatorGroup" [value]="item.id">
+          {{ item.ten_nhom_chi_tieu }}
+        </option>
+      </select> -->
+      <div *ngIf="
+      form_ma_loai_ct_Ctrl.invalid &&
+      (form_ma_loai_ct_Ctrl.dirty || form_ma_loai_ct_Ctrl.touched)
+    " class="e-error">
+        <div *ngIf="form_ma_loai_ct_Ctrl.errors.required" class="error-text">
+          Thuộc tính là bắt buộc.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="ky_bao_cao">Kỳ báo cáo<span style="color: red">*</span></label>
+      <div class="multiselect-custom">
+        <ejs-multiselect id='multiselect-checkbox' formControlName="ky_bao_cao" #checkbox [dataSource]='periodData'
+          placeholder='Chọn kỳ' [mode]='mode' [popupHeight]='popHeight' [showDropDownIcon]='true' showSelectAll='true'
+          [filterBarPlaceholder]='filterPlaceholder' [(ngModel)]="indicatorMeasureData.ky_bao_cao"
+          [enabled]="enableDropdown(indicatorMeasureData)"></ejs-multiselect>
+      </div>
+      <div *ngIf="
+      form_ky_bao_cao_Ctrl.invalid &&
+      (form_ky_bao_cao_Ctrl.dirty || form_ky_bao_cao_Ctrl.touched)
+    " class="e-error">
+        <div *ngIf="form_ky_bao_cao_Ctrl.errors.required" class="error-text">
+          Thuộc tính là bắt buộc.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="ky_tinh">Kỳ nhập liệu<span style="color: red">*</span></label>
+      <ejs-dropdownlist id="ky_tinh" [dataSource]="periodList" [value]="indicatorMeasureData.ky_tinh"
+        formControlName="ky_tinh" [(ngModel)]="indicatorMeasureData.ky_tinh" [fields]="{text: 'Name', value: 'Name'}"
+        class="dropdown-customize" [enabled]="enableDropdown(indicatorMeasureData)">
+      </ejs-dropdownlist>
+      <!-- <select id="ky_tinh" formControlName="ky_tinh" class="form-control" [(ngModel)]="indicatorMeasureData.ky_tinh"
+        [attr.disabled]="!enableDropdown(indicatorMeasureData)">
+        <option *ngFor="let item of periodList" [value]="item.Name">
+          {{ item.Name }}
+        </option>
+      </select> -->
+      <div *ngIf="
+          form_ky_tinh_Ctrl.invalid &&
+          (form_ky_tinh_Ctrl.dirty || form_ky_tinh_Ctrl.touched)
+        " class="e-error">
+        <div *ngIf="form_ky_tinh_Ctrl.errors.required" class="error-text">
+          Thuộc tính là bắt buộc.
+        </div>
+      </div>
+    </div>
+    <!-- <div class="form-group col-md-6">
+      <label for="ten_nhom_chi_tieu">Đơn vị quản lý</label>
+      <select id="ten_nhom_chi_tieu" formControlName="ten_nhom_chi_tieu" class="form-control"
+        [(ngModel)]="indicatorMeasureData.ten_nhom_chi_tieu">
+        <option *ngFor="let item of indiGroupList" [value]="item.ten_nhom_chi_tieu">
+          {{ item.ten_nhom_chi_tieu }}
+        </option>
+      </select>
+    </div> -->
+    <div *ngIf="['6', '7'].includes(user.cap)" class="form-group col-md-6">
+      <label for="so_quan_ly">Sở quản lý<span style="color: red">*</span></label>
+      <ejs-dropdownlist id="so_quan_ly" [dataSource]="danhSachSo" [value]="indicatorMeasureData.so_quan_ly"
+        formControlName="so_quan_ly" [(ngModel)]="indicatorMeasureData.so_quan_ly"
+        [fields]="{text: 'name', value: 'value'}" class="dropdown-customize"
+        [enabled]="enableDropdown(indicatorMeasureData)">
+      </ejs-dropdownlist>
+      <!-- <select id="so_quan_ly" formControlName="so_quan_ly" class="form-control"
+        [(ngModel)]="indicatorMeasureData.so_quan_ly" [enabled]="enableDropdown(indicatorMeasureData)">
+        <option *ngFor="let item of danhSachSo" [value]="item.value">
+          {{ item.name }}
+        </option>
+      </select> -->
+      <div *ngIf="
+          form_so_quan_ly_Ctrl.invalid &&
+          (form_so_quan_ly_Ctrl.dirty || form_so_quan_ly_Ctrl.touched)
+        " class="e-error">
+        <div *ngIf="form_so_quan_ly_Ctrl.errors.required" class="error-text">
+          Thuộc tính là bắt buộc.
+        </div>
+      </div>
+    </div>
+    <div *ngIf="['2', '3', '6'].includes(user.cap) || (user.cap == 7 && !indicatorMeasureData?.cot_loi)"
+      class="form-group col-md-6">
+      <label for="phong_quan_ly">Phòng quản lý</label>
+      <div class="multiselect-custom">
+        <ejs-multiselect formControlName="phong_quan_ly" [dataSource]='indiGroupList' placeholder='Chọn phòng'
+          [mode]='mode' [popupHeight]='popHeight' [showDropDownIcon]='true' showSelectAll='true'
+          [filterBarPlaceholder]='filterPlaceholder' [(ngModel)]="indicatorMeasureData.phong_quan_ly"
+          [fields]="districtFields"></ejs-multiselect>
+      </div>
+      <!-- <ejs-dropdownlist id="phong_quan_ly" [dataSource]="indiGroupList" [value]="indicatorMeasureData.phong_quan_ly"
+        formControlName="phong_quan_ly" [(ngModel)]="indicatorMeasureData.phong_quan_ly"
+        [fields]="{text: 'name', value: 'value'}" class="dropdown-customize">
+      </ejs-dropdownlist> -->
+      <!-- <select id="phong_quan_ly" formControlName="phong_quan_ly" class="form-control"
+        [(ngModel)]="indicatorMeasureData.phong_quan_ly" [enabled]="enableDropdown(indicatorMeasureData)">
+        <option value=""></option>
+        <option *ngFor="let item of indiGroupList" [value]="item.value">
+          {{ item.name }}
+        </option>
+      </select> -->
+    </div>
+    <div class="form-group col-md-6">
+      <label for="don_vi_hanh_chinh">Đơn vị giao<span style="color: red">*</span></label>
+      <ejs-dropdownlist id="don_vi_hanh_chinh" [dataSource]="administrativeUnits"
+        [value]="indicatorMeasureData.don_vi_hanh_chinh" formControlName="don_vi_hanh_chinh"
+        [(ngModel)]="indicatorMeasureData.don_vi_hanh_chinh" [fields]="{text: 'ten_dv_giao', value: 'ten_dv_giao'}"
+        class="dropdown-customize" [enabled]="enableDropdown(indicatorMeasureData)">
+      </ejs-dropdownlist>
+      <!-- <select id="don_vi_hanh_chinh" formControlName="don_vi_hanh_chinh" class="form-control"
+        [(ngModel)]="indicatorMeasureData.don_vi_hanh_chinh" [attr.disabled]="!enableDropdown(indicatorMeasureData)">
+        <option *ngFor="let item of administrativeUnits" [value]="item.ten_dv_giao">
+          {{ item.ten_dv_giao }}
+        </option>
+      </select> -->
+      <div *ngIf="
+      form_don_vi_hanh_chinh_Ctrl.invalid &&
+      (form_don_vi_hanh_chinh_Ctrl.dirty || form_don_vi_hanh_chinh_Ctrl.touched)
+    " class="e-error">
+        <div *ngIf="form_don_vi_hanh_chinh_Ctrl.errors.required" class="error-text">
+          Thuộc tính là bắt buộc.
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="ten_don_vi">Đơn vị tính<span style="color: red">*</span></label>
+      <ejs-dropdownlist id="ten_don_vi" [dataSource]="unitList" [value]="indicatorMeasureData.ten_don_vi"
+        formControlName="ten_don_vi" [(ngModel)]="indicatorMeasureData.ten_don_vi" (filtering)='onFilteringUnit($event)'
+        [fields]="UnitFields" class="dropdown-customize" filterBarPlaceholder="Tìm kiếm" [allowFiltering]="true"
+        [ignoreAccent]='true' [enabled]="enableDropdown(indicatorMeasureData)">
+      </ejs-dropdownlist>
+      <!-- <select id="ten_don_vi" formControlName="ten_don_vi" class="form-control"
+        [(ngModel)]="indicatorMeasureData.ten_don_vi">
+        <option *ngFor="let item of unitList" [value]="item.ten_don_vi_tinh">
+          {{ item.ten_don_vi_tinh }}
+        </option>
+      </select> -->
+      <div *ngIf="
+      form_ten_don_vi_Ctrl.invalid &&
+      (form_ten_don_vi_Ctrl.dirty || form_ten_don_vi_Ctrl.touched)
+    " class="e-error">
+        <div *ngIf="form_ten_don_vi_Ctrl.errors.required" class="error-text">
+          Thuộc tính là bắt buộc.
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="cong_don">Phương pháp tính<span style="color: red">*</span></label>
+      <ejs-dropdownlist id="cong_don" [dataSource]="cong_don_list" [value]="indicatorMeasureData.cong_don"
+        formControlName="cong_don" [(ngModel)]="indicatorMeasureData.cong_don" [fields]="{text: 'text', value: 'value'}"
+        class="dropdown-customize" [enabled]="enableDropdown(indicatorMeasureData)">
+      </ejs-dropdownlist>
+      <!-- <select id="cong_don" formControlName="cong_don" class="form-control" placeholder="Phương pháp tính"
+        [(ngModel)]="indicatorMeasureData.cong_don" [attr.disabled]="!enableDropdown(indicatorMeasureData)">
+        <option value="0">
+          Thay thế
+        </option>
+        <option value="1">
+          Cộng dồn
+        </option>
+      </select> -->
+      <div *ngIf="
+      form_cong_don_Ctrl.invalid &&
+      (form_cong_don_Ctrl.dirty || form_cong_don_Ctrl.touched)
+    " class="e-error">
+        <div *ngIf="form_cong_don_Ctrl.errors.required" class="error-text">
+          Thuộc tính là bắt buộc.
+        </div>
+      </div>
+    </div>
+    <!-- <div class="form-row"> -->
+    <div *ngIf="user.cap >= 7" class="form-group col-md-12">
+      <label for="cot_loi" style="font-size: 16px;"><input id="cot_loi" type="checkbox"
+          [(ngModel)]="indicatorMeasureData.cot_loi" formControlName="cot_loi" style="margin-right: 10px;"
+          [readonly]="!enableDropdown(indicatorMeasureData)" />Giao xuống
+        huyện</label>
+      <!-- <label for="cot_loi">Loại chỉ tiêu<span style="color: red">*</span></label>
+      <select id="cot_loi" formControlName="cot_loi" class="form-control" placeholder="Loại chỉ tiêu"
+        [(ngModel)]="indicatorMeasureData.cot_loi">
+        <option *ngFor="let item of cotloiList" [value]="item.value">
+          {{item.text}}
+        </option>
+      </select> -->
+    </div>
+    <!-- </div> -->
+  </div>
+  <!-- <div class="form-row">
+    <div class="form-group col-md-12 multiselect-custom">
+      <label for="ma_nhom_nguoi_dung"></label>
+      <ejs-multiselect
+        *ngIf="userGroupList"
+        id="ma_nhom_nguoi_dung"
+        formControlName="ma_nhom_nguoi_dung"
+        [(ngModel)]="indicatorMeasureData.ma_nhom_nguoi_dung"
+        [dataSource]="userGroupList"
+        [fields]="fields"
+        placeholder="Chọn nhóm người dùng"
+        [mode]="mode"
+      ></ejs-multiselect>
+    </div>
+  </div> -->
+  <!-- comment congthuc -->
+  <div class="form-group">
+    <label for="tham_so_dau_vao">Danh sách tham số đầu vào</label>
+    <tagify id="tham_so_dau_vao" name="tham_so_dau_vao" formControlName="tham_so_dau_vao" [(settings)]="settings"
+      [whitelist]="whitelist$" [readonly]="readonly || !enableDropdownXinMan(indicatorMeasureData)"
+      (change)="onInputsTagsChange($event)" (add)="onInputsAddTags($event)" (remove)="onInputsRemoveTags($event)"
+      #tagify [(ngModel)]="tagsValue">
+    </tagify>
+  </div>
+  <div class="form-group">
+    <label for="cong_thuc">Công thức tính<b>(Nhập @ + tên chỉ tiêu)</b></label>
+    <tagify #cong_thuc id="cong_thuc" name="cong_thuc" formControlName="cong_thuc" [settings]="formula_settings"
+      [(whitelist)]="formula_whitelist$" [readonly]="readonly || !enableDropdownXinMan(indicatorMeasureData)"
+      (change)="onFormulaTagsChange($event)" (keydown)="onFormulaTagsKeydown($event)" value="formulaTagsValue"
+      [(ngModel)]="formulaTagsValue">
+    </tagify>
+  </div>
+  <div class="form-group">
+    <div class="form-group">
+      <ng-katex [equation]="equation" [options]="katexOptions"></ng-katex>
+    </div>
+  </div>
+</form>

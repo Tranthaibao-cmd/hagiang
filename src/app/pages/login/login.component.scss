@@ -1,0 +1,34 @@
+// body {
+//   background-image: url("../../../assets/img/background-login1.jpg") !important;
+//   background-position: bottom;
+//   background-size: cover;
+//   text-align: "Open Sans", sans-serif;
+//   color: #666666;
+// }
+.container-custom {
+  background-image: url("../../../assets/img/bg-login.jpg");
+  background-position: top;
+  background-size: cover;
+  text-align: "Open Sans", sans-serif;
+  color: #666666;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  .layout {
+    // background-image: url(layout.png);
+    // background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(3px);
+  }
+}
+@media only screen and (max-width: 540px) {
+  .container-custom {
+    margin-top: 10%;
+  }
+}
+@media only screen and (min-width: 541px) {
+  .container-custom {
+    align-items: center;
+  }
+}

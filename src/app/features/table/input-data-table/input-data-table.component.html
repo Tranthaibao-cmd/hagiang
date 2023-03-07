@@ -1,0 +1,74 @@
+<div class="control-section" *ngIf="indicatorList">
+  <ejs-treegrid #treegrid [dataSource]="indicatorList" allowPaging="true" childMapping="children" [treeColumnIndex]="0"
+    [pageSettings]="pageSettings" allowTextWrap="true" [toolbar]="toolbar" [allowSorting]="true"
+    (dataBound)="dataBound($event)" (load)="onLoad()" (toolbarClick)="clickHandler($event)">
+    <e-columns>
+      <e-column field="ten_chi_tieu" headerText="Chỉ tiêu" width="150" textAlign="Left" [isPrimaryKey]="false">
+        <ng-template #template let-data>
+          <pre class="pre-custom">{{ data.ten_chi_tieu }}</pre>
+        </ng-template>
+      </e-column>
+      <e-column field="ky_tinh" headerText="Kỳ nhập liệu" width="80" [allowEditing]="false" textAlign="Left">
+      </e-column>
+      <e-column field="gia_tri" headerText="Giá trị" width="80" [allowEditing]="false" textAlign="Left">
+        <ng-template #template let-data>
+          <div *ngIf="data.ma_quyen == 0 || data.ma_quyen == -1; else role">
+            {{ data.gia_tri }}
+          </div>
+          <ng-template #role>
+            <!-- <ejs-numerictextbox locale='de' currency='EUR' format='c2' value='100'></ejs-numerictextbox> -->
+            <input type="text" [ngModel]="getValue(data.ma_chi_tieu, data.gia_tri, 'gia_tri')" class="value-number"
+              (change)="changeInput($event, data, 'value')" mask="separator" thousandSeparator="."
+              [class]="data.status == 'Chưa tồn tại' ? 'color-input': ''">
+          </ng-template>
+        </ng-template>
+      </e-column>
+      <e-column field="uoc_tinh" headerText="Ước tính" width="80" [allowEditing]="false" textAlign="Left">
+        <ng-template #template let-data>
+          <div *ngIf="data.ma_quyen == 0 || data.ma_quyen == -1; else allowEdit">
+            {{ data.uoc_tinh }}
+          </div>
+          <ng-template #allowEdit>
+            <input type="text" [ngModel]="getValue(data.ma_chi_tieu, data.uoc_tinh, 'uoc_tinh')" class="value-number"
+              (change)="changeInput($event, data, 'predict')" [patterns]="customPatterns" mask="separator"
+              thousandSeparator="." [class]="data.status == 'Chưa tồn tại' ? 'color-input': ''">
+          </ng-template>
+        </ng-template>
+      </e-column>
+
+      <e-column field="gia_tri_so_bo" headerText="Sơ bộ" width="80" [allowEditing]="false" textAlign="Left" *ngIf="sobo">
+        <ng-template #template let-data>
+          <div *ngIf="data.ma_quyen == 0 || data.ma_quyen == -1; else allowEdit">
+            {{ data.gia_tri_so_bo }}
+          </div>
+          <ng-template #allowEdit>
+            <input type="text" [ngModel]="getValue(data.ma_chi_tieu, data.gia_tri_so_bo, 'gia_tri_so_bo')" class="value-number"
+              (change)="changeInput($event, data, 'sobo_var')" [patterns]="customPatterns" mask="separator"
+              thousandSeparator="." [class]="data.status == 'Chưa tồn tại' ? 'color-input': ''">
+          </ng-template>
+        </ng-template>
+      </e-column>
+
+      <e-column field="ten_don_vi" headerText="Đơn vị" width="80" [allowEditing]="false" textAlign="Left">
+      </e-column>
+      <e-column field="mo_ta" headerText="Mô tả" width="100" [allowEditing]="false" textAlign="Left">
+        <ng-template #template let-data>
+          <div *ngIf="data.ma_quyen == 0 || data.ma_quyen == -1; else role">
+            {{ data.mo_ta }}
+          </div>
+          <ng-template #role><input [value]="getValue(data.ma_chi_tieu, data.mo_ta, 'mo_ta')"
+              (change)="changeInput($event, data, 'desc')" class="cus-input" /></ng-template>
+        </ng-template>
+      </e-column>
+      <!-- <e-column headerText="Tải File" width="100" textAlign="Left" [allowEditing]="false">
+        <ng-template #template let-data><input type="file" [id]="data.ma_chi_tieu"
+            (change)="onUploadedFile($event, data.ma_chi_tieu)"
+            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            [disabled]="data.ma_quyen == 0" />
+          <label class="input-file-label" [for]="data.ma_chi_tieu">
+            File<span class="icon-Artboard-28" style="line-height: 17px"></span></label>
+        </ng-template>
+      </e-column> -->
+    </e-columns>
+  </ejs-treegrid>
+</div>
